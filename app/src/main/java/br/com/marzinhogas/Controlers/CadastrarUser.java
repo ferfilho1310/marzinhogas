@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Usuario;
 import br.com.marzinhogas.R;
@@ -26,6 +28,8 @@ public class CadastrarUser extends AppCompatActivity {
     RadioButton fem, masc;
 
     String masculino, feminino;
+
+    FirebaseAuth fb_user = FirebaseAuth.getInstance();
 
     Usuario usuario = new Usuario();
 
@@ -83,7 +87,7 @@ public class CadastrarUser extends AppCompatActivity {
                 usuario.setSenha(senha_cad.getText().toString());
                 usuario.setConfirmarsenha(confirma_senha.getText().toString());
 
-                new AccessFirebase().cadastrar_user(usuario.getNome(), usuario.getEndereco(), usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
+                new AccessFirebase().cadastrar_user(fb_user.getUid(),usuario.getNome(), usuario.getEndereco(), usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
                         usuario.getSexo(), CadastrarUser.this);
 
             }

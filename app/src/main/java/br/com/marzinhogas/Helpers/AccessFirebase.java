@@ -34,12 +34,12 @@ public class AccessFirebase {
 
     ProgressDialog progressDialog;
 
-    public void pedidos(String nome, String endereco, String data,
+    public void pedidos(String id_user,String nome, String endereco, String data,
                         String produto, int quantidade_gas,int quantidade_agua){
 
         Map<String,Object> map = new HashMap<>();
 
-        //map.put("id_user",id_user);
+        map.put("id_user",id_user);
         map.put("nome",nome);
         map.put("endereco",endereco);
         map.put("data",data);
@@ -52,7 +52,7 @@ public class AccessFirebase {
     }
 
 
-    public void cadastrar_user(final String nome, final String endereco, final String email, final String senha,
+    public void cadastrar_user(final String id,final String nome, final String endereco, final String email, final String senha,
                                final String senhaconfir, final String sexo, final Activity activity) {
 
         FirebaseApp.initializeApp(activity);
@@ -92,6 +92,7 @@ public class AccessFirebase {
 
                         Map<String, String> map = new HashMap<>();
 
+                        map.put("id_user",id);
                         map.put("Nome", nome);
                         map.put("endereco",endereco);
                         map.put("E-mail", email);

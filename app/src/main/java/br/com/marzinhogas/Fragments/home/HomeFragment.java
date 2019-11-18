@@ -11,13 +11,21 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.SimpleDateFormat;
@@ -35,7 +43,12 @@ public class HomeFragment extends Fragment {
     private NumberPicker nb_qtd_agua, nb_qtd_gas;
     private Button pedir;
 
-    String name,id;
+    String name, id_user_logado;
+
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    FirebaseFirestore db_user = FirebaseFirestore.getInstance();
+    CollectionReference cl_user = db_user.collection("Users");
 
     private Pedido pedido = new Pedido();
 
@@ -50,6 +63,12 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        if (firebaseUser != null) {
+
+            id_user_logado = firebaseUser.getUid();
+
+        }
+
         sp_produtos = root.findViewById(R.id.spinner);
         nb_qtd_agua = root.findViewById(R.id.nb_qtd_agua);
         nb_qtd_gas = root.findViewById(R.id.nb_qtd_gas);
@@ -63,6 +82,7 @@ public class HomeFragment extends Fragment {
 
         spinner();
         number_pickers();
+        retorna_dados_usuario(id_user_logado);
 
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,14 +93,8 @@ public class HomeFragment extends Fragment {
                 String data = dateFormat.format(date);
                 pedido.setData(data);
 
-                if(firebaseUser != null){
 
-                    name = firebaseUser.getDisplayName();
-                    id = firebaseUser.getUid();
-
-                }
-
-                new AccessFirebase().pedidos(name, pedido.getEndereco(),
+                new AccessFirebase().pedidos(auth.getUid(), pedido.getEndereco(),pedido.getNome(),
                         pedido.getData(), pedido.getProduto(), pedido.getQuantidade_gas(), pedido.getQuatidade_agua());
             }
         });
@@ -108,6 +122,26 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+
+    public void retorna_dados_usuario(String id) {
+
+        cl_user.whereEqualTo("id_user", id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for(Pedido pedido_banco : queryDocumentSnapshots.toObjects(Pedido.class)){
+
+                            pedido_banco.getNome();
+                            pedido_banco.getEndereco();
+
+                        }
+                    }
+                });
     }
 
     public void spinner() {
