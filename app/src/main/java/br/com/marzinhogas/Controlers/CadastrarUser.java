@@ -80,14 +80,13 @@ public class CadastrarUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 usuario.setNome(nome.getText().toString());
                 usuario.setEndereco(endereco.getText().toString());
                 usuario.setEmail(email_cad.getText().toString());
                 usuario.setSenha(senha_cad.getText().toString());
                 usuario.setConfirmarsenha(confirma_senha.getText().toString());
 
-                new AccessFirebase().cadastrar_user(fb_user.getUid(),usuario.getNome(), usuario.getEndereco(), usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
+                new AccessFirebase().cadastrar_user(usuario.getNome(), usuario.getEndereco(), usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
                         usuario.getSexo(), CadastrarUser.this);
 
             }

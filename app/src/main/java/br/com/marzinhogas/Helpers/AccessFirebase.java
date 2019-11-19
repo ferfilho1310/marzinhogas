@@ -52,7 +52,7 @@ public class AccessFirebase {
     }
 
 
-    public void cadastrar_user(final String id,final String nome, final String endereco, final String email, final String senha,
+    public void cadastrar_user(final String nome, final String endereco, final String email, final String senha,
                                final String senhaconfir, final String sexo, final Activity activity) {
 
         FirebaseApp.initializeApp(activity);
@@ -92,19 +92,19 @@ public class AccessFirebase {
 
                         Map<String, String> map = new HashMap<>();
 
-                        map.put("id_user",id);
-                        map.put("Nome", nome);
+                        map.put("id_user",firebaseAuth.getUid());
+                        map.put("mome", nome);
                         map.put("endereco",endereco);
-                        map.put("E-mail", email);
-                        map.put("Senha", senha);
-                        map.put("Confirmar Senha", senhaconfir);
-                        map.put("Sexo", sexo);
+                        map.put("e-mail", email);
+                        map.put("senha", senha);
+                        map.put("confirmarsenha", senhaconfir);
+                        map.put("sexo", sexo);
 
                         Intent intent = new Intent(activity, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(intent);
 
-                        db_users.add(map);
+                        db_users.document(firebaseAuth.getUid()).set(map);
 
                         Toast.makeText(activity, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
 

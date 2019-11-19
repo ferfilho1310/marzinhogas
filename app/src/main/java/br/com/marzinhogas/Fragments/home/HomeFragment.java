@@ -1,6 +1,8 @@
 package br.com.marzinhogas.Fragments.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ import java.util.Date;
 
 import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Pedido;
+import br.com.marzinhogas.Models.Usuario;
 import br.com.marzinhogas.R;
 
 public class HomeFragment extends Fragment {
@@ -43,7 +46,7 @@ public class HomeFragment extends Fragment {
     private NumberPicker nb_qtd_agua, nb_qtd_gas;
     private Button pedir;
 
-    String name, id_user_logado;
+    String name_user_logado, id_user_logado;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -82,19 +85,41 @@ public class HomeFragment extends Fragment {
 
         spinner();
         number_pickers();
-        retorna_dados_usuario(id_user_logado);
+
+        cl_user.whereEqualTo("id_user", id_user_logado)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
+
+                            String recuperar_endereco = usuario_banco.getEndereco();
+                            String recuperar_nome = usuario_banco.getNome();
+
+                            pedido.setEndereco(recuperar_endereco);
+                            pedido.setNome(recuperar_nome);
+
+                            Log.d("Nome e endereco", "\n" + task.getResult());
+
+                        }
+                    }
+                });
 
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                @SuppressLint("SimpleDateFormat")
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = new Date();
                 String data = dateFormat.format(date);
                 pedido.setData(data);
 
 
-                new AccessFirebase().pedidos(auth.getUid(), pedido.getEndereco(),pedido.getNome(),
+                new AccessFirebase().pedidos(auth.getUid(), pedido.getNome(), pedido.getEndereco(),
                         pedido.getData(), pedido.getProduto(), pedido.getQuantidade_gas(), pedido.getQuatidade_agua());
             }
         });
@@ -124,25 +149,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void retorna_dados_usuario(String id) {
-
-        cl_user.whereEqualTo("id_user", id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                        for(Pedido pedido_banco : queryDocumentSnapshots.toObjects(Pedido.class)){
-
-                            pedido_banco.getNome();
-                            pedido_banco.getEndereco();
-
-                        }
-                    }
-                });
-    }
 
     public void spinner() {
 
