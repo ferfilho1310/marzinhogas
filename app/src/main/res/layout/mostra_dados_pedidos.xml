@@ -9,8 +9,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+
         android:orientation="horizontal">
 
         <TextView
@@ -45,7 +46,7 @@
 
         <TextView
             android:id="@+id/txt_endereco_cliente"
-            android:layout_width="wrap_content"
+            android:layout_width="103dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="-60dp"
             android:layout_marginTop="36dp"
@@ -56,7 +57,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="12dp"
             android:text="Produto pedido"
             android:textColor="@android:color/black"
@@ -66,7 +67,7 @@
             android:id="@+id/txt_produto_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-97dp"
+            android:layout_marginStart="-99dp"
             android:layout_marginTop="36dp"
             android:text="Textview"
             android:textColor="@android:color/black"

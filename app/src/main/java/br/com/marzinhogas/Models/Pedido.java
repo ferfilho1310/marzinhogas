@@ -1,5 +1,7 @@
 package br.com.marzinhogas.Models;
 
+import com.google.firebase.firestore.PropertyName;
+
 public class Pedido {
 
     private String nome;
@@ -9,7 +11,7 @@ public class Pedido {
     private int quatidade_agua;
     private String data;
 
-    public Pedido(){
+    public Pedido() {
 
     }
 
@@ -46,6 +48,7 @@ public class Pedido {
         this.endereco = endereco;
     }
 
+    @PropertyName("quantidade_gas")
     public int getQuantidade_gas() {
         return quantidade_gas;
     }
@@ -54,6 +57,7 @@ public class Pedido {
         this.quantidade_gas = quantidade_gas;
     }
 
+    @PropertyName("quantidade_agua")
     public int getQuatidade_agua() {
         return quatidade_agua;
     }

@@ -21,15 +21,12 @@ import br.com.marzinhogas.R;
 
 public class CadastrarUser extends AppCompatActivity {
 
-
     EditText nome, endereco, email_cad, senha_cad, confirma_senha;
     Button cadatrar_user;
     RadioGroup rg_sexo;
     RadioButton fem, masc;
 
     String masculino, feminino;
-
-    FirebaseAuth fb_user = FirebaseAuth.getInstance();
 
     Usuario usuario = new Usuario();
 

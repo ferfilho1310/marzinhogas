@@ -47,7 +47,7 @@ public class AccessFirebase {
         map.put("quantidade_gas",quantidade_gas);
         map.put("quantidade_agua",quantidade_agua);
 
-        db_pedido.document(firebaseAuth.getUid()).collection("pedidoscliente").add(map);
+        db_pedido.add(map);
 
     }
 
@@ -95,7 +95,7 @@ public class AccessFirebase {
                         map.put("id_user",firebaseAuth.getUid());
                         map.put("mome", nome);
                         map.put("endereco",endereco);
-                        map.put("e-mail", email);
+                        map.put("email", email);
                         map.put("senha", senha);
                         map.put("confirmarsenha", senhaconfir);
                         map.put("sexo", sexo);

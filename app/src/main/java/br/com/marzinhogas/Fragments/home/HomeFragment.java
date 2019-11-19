@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,6 +87,8 @@ public class HomeFragment extends Fragment {
         spinner();
         number_pickers();
 
+        //buscar os dados do usuário logado Ex.: nome, endereço
+
         cl_user.whereEqualTo("id_user", id_user_logado)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -102,8 +105,7 @@ public class HomeFragment extends Fragment {
                             pedido.setEndereco(recuperar_endereco);
                             pedido.setNome(recuperar_nome);
 
-                            Log.d("Nome e endereco", "\n" + task.getResult());
-
+                            Log.d("Nome e endereco", "\n" + recuperar_nome);
                         }
                     }
                 });
@@ -146,9 +148,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
     }
-
 
     public void spinner() {
 
@@ -164,12 +164,19 @@ public class HomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String nome_produto = sp_produtos.getSelectedItem().toString();
-                pedido.setProduto(nome_produto);
+
+                if (nome_produto == "Selecione") {
+
+                    Toast.makeText(getActivity(), "Informe o produto desejado", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    pedido.setProduto(nome_produto);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
 
             }
         });

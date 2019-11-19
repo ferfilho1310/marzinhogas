@@ -69,7 +69,7 @@ public class GalleryFragment extends Fragment {
 
         }
 
-        query = cl_pedidos
+        query = cl_pedidos.whereEqualTo("id_user",id_user)
                 .orderBy("data", Query.Direction.ASCENDING);
 
         fro_pedidos = new FirestoreRecyclerOptions.Builder<Pedido>()
