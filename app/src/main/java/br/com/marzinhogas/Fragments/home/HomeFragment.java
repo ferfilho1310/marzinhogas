@@ -44,18 +44,16 @@ import br.com.marzinhogas.R;
 
 public class HomeFragment extends Fragment {
 
-    HomeViewModel homeViewModel;
-
     private Spinner sp_produtos;
     private NumberPicker nb_qtd_agua, nb_qtd_gas;
     private Button pedir;
 
-    String id_user_logado;
+    private String id_user_logado;
 
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    FirebaseFirestore db_user = FirebaseFirestore.getInstance();
-    CollectionReference cl_user = db_user.collection("Users");
+    private FirebaseFirestore db_user = FirebaseFirestore.getInstance();
+    private CollectionReference cl_user = db_user.collection("Users");
 
     private Pedido pedido = new Pedido();
 
@@ -66,8 +64,6 @@ public class HomeFragment extends Fragment {
 
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         if (firebaseUser != null) {
