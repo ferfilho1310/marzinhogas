@@ -1,18 +1,19 @@
 package br.com.marzinhogas.Models;
 
-import com.google.firebase.firestore.PropertyName;
 
-public class Pedido {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Pedido implements Parcelable {
 
     private String nome;
     private String produto;
     private String endereco;
     private int quantidade_gas;
-    private int quatidade_agua;
+    private int quantidade_agua;
     private String data;
 
     public Pedido() {
-
     }
 
     public Pedido(String nome, String produto, String endereco, int quantidade_gas, int quatidade_agua, String data) {
@@ -20,9 +21,30 @@ public class Pedido {
         this.produto = produto;
         this.endereco = endereco;
         this.quantidade_gas = quantidade_gas;
-        this.quatidade_agua = quatidade_agua;
+        this.quantidade_agua = quatidade_agua;
         this.data = data;
     }
+
+    protected Pedido(Parcel in) {
+        nome = in.readString();
+        produto = in.readString();
+        endereco = in.readString();
+        quantidade_gas = in.readInt();
+        quantidade_agua = in.readInt();
+        data = in.readString();
+    }
+
+    public static final Creator<Pedido> CREATOR = new Creator<Pedido>() {
+        @Override
+        public Pedido createFromParcel(Parcel in) {
+            return new Pedido(in);
+        }
+
+        @Override
+        public Pedido[] newArray(int size) {
+            return new Pedido[size];
+        }
+    };
 
     public String getNome() {
         return nome;
@@ -48,7 +70,6 @@ public class Pedido {
         this.endereco = endereco;
     }
 
-    @PropertyName("quantidade_gas")
     public int getQuantidade_gas() {
         return quantidade_gas;
     }
@@ -57,13 +78,12 @@ public class Pedido {
         this.quantidade_gas = quantidade_gas;
     }
 
-    @PropertyName("quantidade_agua")
-    public int getQuatidade_agua() {
-        return quatidade_agua;
+    public int getQuantidade_agua() {
+        return quantidade_agua;
     }
 
-    public void setQuatidade_agua(int quatidade_agua) {
-        this.quatidade_agua = quatidade_agua;
+    public void setQuantidade_agua(int quatidade_agua) {
+        this.quantidade_agua = quatidade_agua;
     }
 
     public String getData() {
@@ -72,5 +92,20 @@ public class Pedido {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(nome);
+        parcel.writeString(produto);
+        parcel.writeString(endereco);
+        parcel.writeInt(quantidade_gas);
+        parcel.writeInt(quantidade_agua);
+        parcel.writeString(data);
     }
 }

@@ -1,6 +1,8 @@
 package br.com.marzinhogas.Fragments.home;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,7 +50,7 @@ public class HomeFragment extends Fragment {
     private NumberPicker nb_qtd_agua, nb_qtd_gas;
     private Button pedir;
 
-    String name_user_logado, id_user_logado;
+    String id_user_logado;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -86,43 +89,47 @@ public class HomeFragment extends Fragment {
 
         spinner();
         number_pickers();
-
-        //buscar os dados do usuário logado Ex.: nome, endereço
-
-        cl_user.whereEqualTo("id_user", id_user_logado)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
-
-                            String recuperar_endereco = usuario_banco.getEndereco();
-                            String recuperar_nome = usuario_banco.getNome();
-
-                            pedido.setEndereco(recuperar_endereco);
-                            pedido.setNome(recuperar_nome);
-
-                            Log.d("Nome e endereco", "\n" + recuperar_nome);
-                        }
-                    }
-                });
+        lerdadosusuario(id_user_logado);
 
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                @SuppressLint("SimpleDateFormat")
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = new Date();
-                String data = dateFormat.format(date);
-                pedido.setData(data);
+                final Dialog dialog = new Dialog(getActivity());
 
+                dialog.setContentView(R.layout.dialog_confirma_pedido);
 
-                new AccessFirebase().pedidos(auth.getUid(), pedido.getNome(), pedido.getEndereco(),
-                        pedido.getData(), pedido.getProduto(), pedido.getQuantidade_gas(), pedido.getQuatidade_agua());
+                Button ok = dialog.findViewById(R.id.btn_OK);
+                Button cancelar = dialog.findViewById(R.id.btn_cancelar);
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        @SuppressLint("SimpleDateFormat")
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        Date date = new Date();
+                        String data = dateFormat.format(date);
+                        pedido.setData(data);
+
+                        new AccessFirebase().pedidos(auth.getUid(), pedido.getNome(), pedido.getEndereco(),
+                                pedido.getData(), pedido.getProduto(),
+                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua());
+
+                        dialog.dismiss();
+                    }
+                });
+
+                cancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+
             }
         });
 
@@ -135,7 +142,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
-                pedido.setQuatidade_agua(numberPicker.getValue());
+                pedido.setQuantidade_agua(numberPicker.getValue());
 
             }
         });
@@ -180,5 +187,30 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    public void lerdadosusuario(String id_usuario_logado) {
+
+        //buscar os dados do usuário logado Ex.: nome, endereço
+
+        cl_user.whereEqualTo("id_user", id_usuario_logado)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
+
+                            String recuperar_endereco = usuario_banco.getEndereco();
+                            String recuperar_nome = usuario_banco.getNome();
+
+                            pedido.setEndereco(recuperar_endereco);
+                            pedido.setNome(recuperar_nome);
+
+                        }
+                    }
+                });
     }
 }

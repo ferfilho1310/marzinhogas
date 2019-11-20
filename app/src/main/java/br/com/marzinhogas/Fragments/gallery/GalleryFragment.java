@@ -33,17 +33,13 @@ public class GalleryFragment extends Fragment {
 
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    FirebaseAuth fb_user_id = FirebaseAuth.getInstance();
-
     Query query;
     FirestoreRecyclerOptions<Pedido> fro_pedidos;
     AdapterPedidosCliente adapterPedidosCliente;
     RecyclerView rc_pedidos_feitos;
 
     FirebaseFirestore firebaseAuth = FirebaseFirestore.getInstance();
-    CollectionReference cl_pedidos = firebaseAuth.collection("Pedidos")
-            .document(fb_user_id.getUid())
-            .collection("pedidoscliente");
+    CollectionReference cl_pedidos = firebaseAuth.collection("Pedidos");
 
     String id_user;
 
@@ -70,7 +66,7 @@ public class GalleryFragment extends Fragment {
         }
 
         query = cl_pedidos.whereEqualTo("id_user",id_user)
-                .orderBy("data", Query.Direction.ASCENDING);
+                .orderBy("data", Query.Direction.DESCENDING);
 
         fro_pedidos = new FirestoreRecyclerOptions.Builder<Pedido>()
                 .setQuery(query, Pedido.class)

@@ -42,7 +42,7 @@ public class AdapterPedidosCliente extends FirestoreRecyclerAdapter<Pedido, Adap
         holder.nome.setText(model.getNome());
         holder.produtos.setText(model.getProduto());
         holder.qtd_gas.setText(String.valueOf(model.getQuantidade_gas()));
-        holder.qtd_agua.setText(String.valueOf(model.getQuatidade_agua()));
+        holder.qtd_agua.setText(String.valueOf(model.getQuantidade_agua()));
         holder.data.setText(model.getData());
         holder.endereco.setText(model.getEndereco());
 
