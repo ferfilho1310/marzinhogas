@@ -30,6 +30,7 @@ public class ShareFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
         return root;
     }
 }
