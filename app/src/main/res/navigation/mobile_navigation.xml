@@ -8,14 +8,14 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="br.com.marzinhogas.Fragments.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/menu_pedir"
+        tools:layout="@layout/fragment_pedir" />
 
     <fragment
         android:id="@+id/nav_gallery"
         android:name="br.com.marzinhogas.Fragments.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:label="@string/menu_pedidos"
+        tools:layout="@layout/fragment_registro_pedidos" />
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -32,12 +32,10 @@
     <fragment
         android:id="@+id/nav_share"
         android:name="br.com.marzinhogas.Fragments.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        tools:layout="@layout/fragment_perfil" />
 
     <fragment
         android:id="@+id/nav_send"
         android:name="br.com.marzinhogas.Fragments.send.SendFragment"
-        android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
 </navigation>
