@@ -11,17 +11,20 @@ public class Usuario {
     private String senha;
     private String confirmarsenha;
     private String sexo;
+    private String token;
 
     public Usuario() {
     }
 
-    public Usuario(String nome, String endereco, String email, String senha, String confirmarsenha, String sexo) {
+    public Usuario(String nome, String endereco, String email, String senha,
+                   String confirmarsenha, String sexo, String token) {
         this.nome = nome;
         this.endereco = endereco;
         this.email = email;
         this.senha = senha;
         this.confirmarsenha = confirmarsenha;
         this.sexo = sexo;
+        this.token = token;
     }
 
     public String getNome() {
@@ -70,5 +73,13 @@ public class Usuario {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

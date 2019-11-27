@@ -24,6 +24,7 @@ import java.util.Map;
 
 import br.com.marzinhogas.Controlers.EntrarUser;
 import br.com.marzinhogas.Controlers.MainActivity;
+import br.com.marzinhogas.Controlers.MainEntregadores;
 
 public class AccessFirebase {
 
@@ -53,7 +54,7 @@ public class AccessFirebase {
 
 
     public void cadastrar_user(final String nome, final String endereco, final String email, final String senha,
-                               final String senhaconfir, final String sexo, final Activity activity) {
+                               final String senhaconfir, final String sexo, final String token, final Activity activity) {
 
         FirebaseApp.initializeApp(activity);
 
@@ -99,6 +100,7 @@ public class AccessFirebase {
                         map.put("senha", senha);
                         map.put("confirmarsenha", senhaconfir);
                         map.put("sexo", sexo);
+                        map.put("token",token);
 
                         Intent intent = new Intent(activity, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -190,6 +192,51 @@ public class AccessFirebase {
                     if (task.isSuccessful()) {
 
                         Intent i_entrar_prof = new Intent(activity, MainActivity.class);
+                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.startActivity(i_entrar_prof);
+                        activity.finish();
+
+                        Toast.makeText(activity, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(activity, "Erro ao efetuar o login. Verifique os dados digitados", Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (Exception e) {
+
+                    Toast.makeText(activity, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_LONG).show();
+                }
+
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void entrar_firebase_entregador(final String email, String senha, final Activity activity) {
+
+        FirebaseApp.initializeApp(activity);
+
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(activity, "Digite seu e-mail", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(senha)) {
+            Toast.makeText(activity, "Informe uma senha.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final ProgressDialog progressDialog = new ProgressDialog(activity);
+
+        progressDialog.setMessage("Entrando...");
+        progressDialog.show();
+
+        firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                try {
+                    if (task.isSuccessful()) {
+
+                        Intent i_entrar_prof = new Intent(activity, MainEntregadores.class);
                         i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(i_entrar_prof);
                         activity.finish();

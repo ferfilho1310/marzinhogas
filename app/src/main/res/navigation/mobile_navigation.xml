@@ -7,35 +7,35 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="br.com.marzinhogas.Fragments.home.HomeFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.home.HomeFragment"
         android:label="@string/menu_pedir"
         tools:layout="@layout/fragment_pedir" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="br.com.marzinhogas.Fragments.gallery.GalleryFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.gallery.GalleryFragment"
         android:label="@string/menu_pedidos"
         tools:layout="@layout/fragment_registro_pedidos" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="br.com.marzinhogas.Fragments.slideshow.SlideshowFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_tools"
-        android:name="br.com.marzinhogas.Fragments.tools.ToolsFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.tools.ToolsFragment"
         android:label="@string/menu_tools"
         tools:layout="@layout/fragment_tools" />
 
     <fragment
         android:id="@+id/nav_share"
-        android:name="br.com.marzinhogas.Fragments.share.ShareFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.share.ShareFragment"
         tools:layout="@layout/fragment_perfil" />
 
     <fragment
         android:id="@+id/nav_send"
-        android:name="br.com.marzinhogas.Fragments.send.SendFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.send.SendFragment"
         tools:layout="@layout/fragment_send" />
 </navigation>

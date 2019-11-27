@@ -8,16 +8,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import br.com.marzinhogas.Controlers.MainActivity;
-import br.com.marzinhogas.Fragments.home.HomeFragment;
+import br.com.marzinhogas.Fragments.fragments_usuario.home.HomeFragment;
 import br.com.marzinhogas.R;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class FirebasePushMessage extends FirebaseMessagingService {
 

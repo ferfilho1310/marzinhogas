@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +14,17 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Usuario;
 import br.com.marzinhogas.R;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class CadastrarUser extends AppCompatActivity {
 
@@ -73,6 +80,25 @@ public class CadastrarUser extends AppCompatActivity {
             }
         });
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Falha ao obter o token", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        usuario.setToken(token);
+
+                        // Log and toast
+                        Log.d("Token", token);
+                    }
+                });
+
         cadatrar_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +110,7 @@ public class CadastrarUser extends AppCompatActivity {
                 usuario.setConfirmarsenha(confirma_senha.getText().toString());
 
                 new AccessFirebase().cadastrar_user(usuario.getNome(), usuario.getEndereco(), usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
-                        usuario.getSexo(), CadastrarUser.this);
+                        usuario.getSexo(), usuario.getToken(), CadastrarUser.this);
 
             }
         });

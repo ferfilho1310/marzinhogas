@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical"
-    tools:context=".Controlers.CadastrarUser">
+    tools:context=".Controlers.CadastroEntregadores"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -17,7 +15,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -37,7 +35,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="375dp"
-        android:layout_height="560dp"
+        android:layout_height="500dp"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="-116dp"
@@ -69,29 +67,6 @@
                 android:layout_width="260dp"
                 android:layout_height="65dp"
                 android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="36dp"
-            android:src="@drawable/ic_home_2" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="-56dp"
-            android:hint="Endereço Completo">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/btn_endereço"
-                android:layout_width="260dp"
-                android:layout_height="65dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -205,5 +180,6 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
 
 </LinearLayout>

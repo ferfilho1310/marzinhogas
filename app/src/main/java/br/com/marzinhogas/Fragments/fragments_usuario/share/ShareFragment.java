@@ -1,4 +1,4 @@
-package br.com.marzinhogas.Fragments.share;
+package br.com.marzinhogas.Fragments.fragments_usuario.share;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

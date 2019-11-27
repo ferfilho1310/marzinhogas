@@ -1,4 +1,4 @@
-package br.com.marzinhogas.Fragments.gallery;
+package br.com.marzinhogas.Fragments.fragments_usuario.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
