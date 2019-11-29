@@ -24,11 +24,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.marzinhogas.Helpers.AccessFirebase;
+import br.com.marzinhogas.Helpers.PedidoAplication;
+import br.com.marzinhogas.Models.Entregadores;
+import br.com.marzinhogas.Models.Notification;
 import br.com.marzinhogas.Models.Pedido;
 import br.com.marzinhogas.Models.Usuario;
 import br.com.marzinhogas.R;
@@ -47,6 +51,8 @@ public class HomeFragment extends Fragment {
     private CollectionReference cl_user = db_user.collection("Users");
 
     private Pedido pedido = new Pedido();
+    private Entregadores entregadores = new Entregadores();
+    private Usuario usuario = new Usuario();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -98,10 +104,28 @@ public class HomeFragment extends Fragment {
                         Date date = new Date();
                         String data = dateFormat.format(date);
                         pedido.setData(data);
+                        pedido.setUser_id_pedido(auth.getUid());
 
-                        new AccessFirebase().pedidos(auth.getUid(), pedido.getNome(), pedido.getEndereco(),
+                        new AccessFirebase().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
                                 pedido.getData(), pedido.getProduto(),
                                 pedido.getQuantidade_gas(), pedido.getQuantidade_agua());
+
+                        if (!entregadores.isEstado()) {
+
+                            Notification notification = new Notification();
+
+                            notification.setUser_id_pedido(pedido.getUser_id_pedido());
+                            notification.setNome(pedido.getNome());
+                            notification.setEndereco(pedido.getEndereco());
+                            notification.setProduto(pedido.getProduto());
+                            notification.setEndereco(pedido.getEndereco());
+                            notification.setData(pedido.getData());
+                            notification.setQuantidade_agua(pedido.getQuantidade_agua());
+                            notification.setQuantidade_gas(pedido.getQuantidade_gas());
+
+                            new AccessFirebase().noitificacoes(usuario.getToken(), notification);
+
+                        }
 
                         dialog.dismiss();
                     }
@@ -120,7 +144,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        updatetoken();
+
         return root;
+    }
+
+    private void updatetoken() {
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        String uid = auth.getUid();
+
+        usuario.setToken(token);
+
+        if (uid != null) {
+
+            FirebaseFirestore.getInstance().collection("Users")
+                    .document(uid)
+                    .update("token", token);
+
+        }
     }
 
     public void number_pickers() {

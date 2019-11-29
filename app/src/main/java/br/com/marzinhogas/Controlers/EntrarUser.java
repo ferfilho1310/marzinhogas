@@ -71,9 +71,9 @@ public class EntrarUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i_sou_entregador = new Intent(EntrarUser.this, EntrarEntregadores.class);
+                /*Intent i_sou_entregador = new Intent(EntrarUser.this, EntrarEntregadores.class);
                 startActivity(i_sou_entregador);
-
+*/
             }
         });
 

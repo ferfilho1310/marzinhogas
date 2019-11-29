@@ -7,20 +7,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:name=".Helpers.PedidoAplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Controlers.MainEntregadores"
-            android:label="@string/title_activity_main_entregadores"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Controlers.EntrarEntregadores"
-            android:label="@string/title_activity_entrar_entregadores"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Controlers.CadastroEntregadores"
-            android:label="@string/title_activity_cadastro_entregadores"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Controlers.CadastrarUser"
             android:screenOrientation="portrait" />

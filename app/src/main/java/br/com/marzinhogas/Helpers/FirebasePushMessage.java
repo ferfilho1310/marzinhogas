@@ -1,50 +1,87 @@
 package br.com.marzinhogas.Helpers;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import br.com.marzinhogas.Fragments.fragments_usuario.home.HomeFragment;
+import java.util.Map;
+
+import br.com.marzinhogas.Controlers.MainActivity;
+import br.com.marzinhogas.Models.Pedido;
 import br.com.marzinhogas.R;
 
 public class FirebasePushMessage extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        super.onMessageReceived(remoteMessage);
 
-        /*MostrarNotificacao(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());*/
+        final Map<String, String> map = remoteMessage.getData();
 
-        Log.d("Msg", "Message received ["+remoteMessage+"]");
+        if (map == null) return;
 
-        // Create Notification
-        Intent intent = new Intent(this, HomeFragment.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1410,
-                intent, PendingIntent.FLAG_ONE_SHOT);
+        final Intent i_entregadores = new Intent(this, MainActivity.class);
 
-        NotificationCompat.Builder notificationBuilder = new
-                NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.logo_entrada)
-                .setContentTitle("Message")
-                .setContentText(remoteMessage.getNotification().getBody())
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
+        FirebaseFirestore.getInstance().collection("notifications")
+                .document(map.get("user_id_pedido"))
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-        NotificationManager notificationManager =
-                (NotificationManager)
-                        getSystemService(Context.NOTIFICATION_SERVICE);
+                        Pedido pedido = documentSnapshot.toObject(Pedido.class);
 
-        notificationManager.notify(1410, notificationBuilder.build());
+                        i_entregadores.putExtra("pedido", pedido);
 
+                        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                                0, i_entregadores, 0);
 
+                        NotificationManager notificationManager =
+                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                        String notificacionid = "channel_id";
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                            NotificationChannel notificationChannel =
+                                    new NotificationChannel(notificacionid, "notificacion",
+                                            NotificationManager.IMPORTANCE_DEFAULT);
+
+                            notificationChannel.setDescription("Channel Description");
+                            notificationChannel.enableLights(true);
+                            notificationChannel.setLightColor(Color.GREEN);
+                            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+                            notificationChannel.getSound();
+                            notificationManager.createNotificationChannel(notificationChannel);
+
+                        }
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), notificacionid);
+
+                        builder.setColor(Color.WHITE)
+                                .setSmallIcon(R.drawable.logo_entrada)
+                                .setContentTitle("Você tem uma entrega para fazer")
+                                .setContentText(map.get("nome"))
+                                .setContentText(map.get("endereco"))
+                                .setContentText(map.get("produto"))
+                                .setContentIntent(pendingIntent);
+
+                        notificationManager.notify(1,builder.build());
+
+                    }
+                });
     }
 }

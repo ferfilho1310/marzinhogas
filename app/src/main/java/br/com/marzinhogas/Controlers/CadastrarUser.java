@@ -84,6 +84,7 @@ public class CadastrarUser extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
+
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "Falha ao obter o token", task.getException());
                             return;
@@ -109,7 +110,8 @@ public class CadastrarUser extends AppCompatActivity {
                 usuario.setSenha(senha_cad.getText().toString());
                 usuario.setConfirmarsenha(confirma_senha.getText().toString());
 
-                new AccessFirebase().cadastrar_user(usuario.getNome(), usuario.getEndereco(), usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
+                new AccessFirebase().cadastrar_user(usuario.getNome(), usuario.getEndereco(),
+                        usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
                         usuario.getSexo(), usuario.getToken(), CadastrarUser.this);
 
             }

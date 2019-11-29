@@ -12,17 +12,20 @@ public class Pedido implements Parcelable {
     private int quantidade_gas;
     private int quantidade_agua;
     private String data;
+    private String user_id_pedido;
 
     public Pedido() {
     }
 
-    public Pedido(String nome, String produto, String endereco, int quantidade_gas, int quatidade_agua, String data) {
+    public Pedido(String nome, String produto, String endereco, int quantidade_gas,
+                  int quatidade_agua, String data, String user_id_pedido) {
         this.nome = nome;
         this.produto = produto;
         this.endereco = endereco;
         this.quantidade_gas = quantidade_gas;
         this.quantidade_agua = quatidade_agua;
         this.data = data;
+        this.user_id_pedido = user_id_pedido;
     }
 
     protected Pedido(Parcel in) {
@@ -32,6 +35,7 @@ public class Pedido implements Parcelable {
         quantidade_gas = in.readInt();
         quantidade_agua = in.readInt();
         data = in.readString();
+        user_id_pedido = in.readString();
     }
 
     public static final Creator<Pedido> CREATOR = new Creator<Pedido>() {
@@ -94,6 +98,14 @@ public class Pedido implements Parcelable {
         this.data = data;
     }
 
+    public String getUser_id_pedido() {
+        return user_id_pedido;
+    }
+
+    public void setUser_id_pedido(String user_id_pedido) {
+        this.user_id_pedido = user_id_pedido;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -107,5 +119,6 @@ public class Pedido implements Parcelable {
         parcel.writeInt(quantidade_gas);
         parcel.writeInt(quantidade_agua);
         parcel.writeString(data);
+        parcel.writeString(user_id_pedido);
     }
 }
