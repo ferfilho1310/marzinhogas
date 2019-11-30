@@ -41,7 +41,6 @@ public class AccessFirebase {
 
         db_notificacoes.document(user_token).set(notification);
 
-
     }
 
     public void pedidos(String id_user, String nome, String endereco, String data,

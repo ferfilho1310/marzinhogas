@@ -32,12 +32,12 @@ public class FirebasePushMessage extends FirebaseMessagingService {
 
         final Map<String, String> map = remoteMessage.getData();
 
-        if (map == null) return;
+        if (map == null || map.get("id") == null) return;
 
         final Intent i_entregadores = new Intent(this, MainActivity.class);
 
         FirebaseFirestore.getInstance().collection("notifications")
-                .document(map.get("user_id_pedido"))
+                .document(map.get("id"))
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -71,15 +71,18 @@ public class FirebasePushMessage extends FirebaseMessagingService {
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), notificacionid);
 
+                        String pedidos = "Nome: " + map.get("nome_pedido") + "\nEndereço: " +
+                                map.get("endereco_pedido") + "\nProduto: " + map.get("nome_produto_pedido");
+
                         builder.setColor(Color.WHITE)
                                 .setSmallIcon(R.drawable.logo_entrada)
                                 .setContentTitle("Você tem uma entrega para fazer")
-                                .setContentText(map.get("nome"))
-                                .setContentText(map.get("endereco"))
-                                .setContentText(map.get("produto"))
+                                .setContentText(pedidos)
+                                .setAutoCancel(true)
+                                .setStyle(new NotificationCompat.BigTextStyle().bigText(pedidos))
                                 .setContentIntent(pendingIntent);
 
-                        notificationManager.notify(1,builder.build());
+                        notificationManager.notify(1, builder.build());
 
                     }
                 });

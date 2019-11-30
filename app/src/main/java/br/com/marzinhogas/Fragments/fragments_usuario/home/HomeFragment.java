@@ -110,8 +110,6 @@ public class HomeFragment extends Fragment {
                                 pedido.getData(), pedido.getProduto(),
                                 pedido.getQuantidade_gas(), pedido.getQuantidade_agua());
 
-                        if (!entregadores.isEstado()) {
-
                             Notification notification = new Notification();
 
                             notification.setUser_id_pedido(pedido.getUser_id_pedido());
@@ -124,8 +122,6 @@ public class HomeFragment extends Fragment {
                             notification.setQuantidade_gas(pedido.getQuantidade_gas());
 
                             new AccessFirebase().noitificacoes(usuario.getToken(), notification);
-
-                        }
 
                         dialog.dismiss();
                     }
