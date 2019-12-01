@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
                             notification.setHorario(pedido.getHorario());
                             notification.setEntregue(pedido.getEntregue());
 
-                            new AccessFirebase().noitificacoes(usuario.getToken(), notification);
+                            new AccessFirebase().notificacoes(usuario.getToken(), notification);
 
                         dialog.dismiss();
                     }
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
-                pedido.setQuantidade_agua(String.valueOf(numberPicker.getValue()));
+                pedido.setQuantidade_agua(numberPicker.getValue());
 
             }
         });
@@ -186,7 +186,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
-                pedido.setQuantidade_gas(String.valueOf(numberPicker.getValue()));
+                pedido.setQuantidade_gas(numberPicker.getValue());
 
             }
         });

@@ -37,14 +37,14 @@ public class AccessFirebase {
 
     ProgressDialog progressDialog;
 
-    public void noitificacoes(String user_token, Notification notification){
+    public void notificacoes(String user_token, Notification notification){
 
         db_notificacoes.document(user_token).set(notification);
 
     }
 
     public void pedidos(String id_user, String nome, String endereco, String data,
-                        String produto, String quantidade_gas, String quantidade_agua,
+                        String produto, int quantidade_gas, int quantidade_agua,
                         String horario, Boolean entregue) {
 
         Map<String, Object> map = new HashMap<>();

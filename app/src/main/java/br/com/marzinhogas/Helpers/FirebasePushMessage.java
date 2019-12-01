@@ -64,7 +64,7 @@ public class FirebasePushMessage extends FirebaseMessagingService {
                             notificationChannel.setDescription("Channel Description");
                             notificationChannel.enableLights(true);
                             notificationChannel.setLightColor(Color.GREEN);
-                            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000, 0, 1000});
+                            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
                             notificationChannel.getSound();
                             notificationManager.createNotificationChannel(notificationChannel);
 
@@ -74,8 +74,7 @@ public class FirebasePushMessage extends FirebaseMessagingService {
 
                         String pedidos = "Nome: " + map.get("nome_pedido") + "\nEndereço: " +
                                 map.get("endereco_pedido") + "\nProduto: " + map.get("nome_produto_pedido")
-                                + "\nHorário " + map.get("horairo_pedido") + "\nQuantidade de Agua: " + map.get("qtd_agua_pedido")
-                                + "\nQuantidade de Gás: " + map.get("qtd_gas_pedido");
+                                + "\nHorário " + map.get("horairo_pedido");
 
                         builder.setColor(Color.WHITE)
                                 .setSmallIcon(R.drawable.logo_entrada)

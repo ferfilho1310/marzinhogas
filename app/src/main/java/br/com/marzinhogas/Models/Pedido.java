@@ -9,8 +9,8 @@ public class Pedido implements Parcelable {
     private String nome;
     private String produto;
     private String endereco;
-    private String quantidade_gas;
-    private String quantidade_agua;
+    private int quantidade_gas;
+    private int quantidade_agua;
     private String data;
     private String user_id_pedido;
     private String horario;
@@ -19,8 +19,8 @@ public class Pedido implements Parcelable {
     public Pedido() {
     }
 
-    public Pedido(String nome, String produto, String endereco, String quantidade_gas,
-                  String quantidade_agua, String data, String user_id_pedido, String horario, Boolean entregue) {
+    public Pedido(String nome, String produto, String endereco, int quantidade_gas,
+                  int quantidade_agua, String data, String user_id_pedido, String horario, Boolean entregue) {
         this.nome = nome;
         this.produto = produto;
         this.endereco = endereco;
@@ -36,8 +36,8 @@ public class Pedido implements Parcelable {
         nome = in.readString();
         produto = in.readString();
         endereco = in.readString();
-        quantidade_gas = in.readString();
-        quantidade_agua = in.readString();
+        quantidade_gas = in.readInt();
+        quantidade_agua = in.readInt();
         data = in.readString();
         user_id_pedido = in.readString();
         horario = in.readString();
@@ -80,19 +80,19 @@ public class Pedido implements Parcelable {
         this.endereco = endereco;
     }
 
-    public String getQuantidade_gas() {
+    public int getQuantidade_gas() {
         return quantidade_gas;
     }
 
-    public void setQuantidade_gas(String quantidade_gas) {
+    public void setQuantidade_gas(int quantidade_gas) {
         this.quantidade_gas = quantidade_gas;
     }
 
-    public String getQuantidade_agua() {
+    public int getQuantidade_agua() {
         return quantidade_agua;
     }
 
-    public void setQuantidade_agua(String quatidade_agua) {
+    public void setQuantidade_agua(int quatidade_agua) {
         this.quantidade_agua = quatidade_agua;
     }
 
@@ -138,8 +138,8 @@ public class Pedido implements Parcelable {
         parcel.writeString(nome);
         parcel.writeString(produto);
         parcel.writeString(endereco);
-        parcel.writeString(quantidade_gas);
-        parcel.writeString(quantidade_agua);
+        parcel.writeInt(quantidade_gas);
+        parcel.writeInt(quantidade_agua);
         parcel.writeString(data);
         parcel.writeString(user_id_pedido);
         parcel.writeString(horario);
