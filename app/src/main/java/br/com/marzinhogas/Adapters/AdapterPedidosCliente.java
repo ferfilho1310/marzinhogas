@@ -45,13 +45,14 @@ public class AdapterPedidosCliente extends FirestoreRecyclerAdapter<Pedido, Adap
         holder.qtd_agua.setText(String.valueOf(model.getQuantidade_agua()));
         holder.data.setText(model.getData());
         holder.endereco.setText(model.getEndereco());
+        holder.horario_pedido.setText(model.getHorario());
 
     }
 
 
     public class PedidosClienteHolder extends RecyclerView.ViewHolder{
 
-        TextView nome,produtos,data,qtd_gas,qtd_agua,endereco;
+        TextView nome,produtos,data,qtd_gas,qtd_agua,endereco,horario_pedido;
 
         public PedidosClienteHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +63,8 @@ public class AdapterPedidosCliente extends FirestoreRecyclerAdapter<Pedido, Adap
             qtd_agua = itemView.findViewById(R.id.txt_qtd_agua);
             qtd_gas = itemView.findViewById(R.id.txt_qtd_gas);
             endereco = itemView.findViewById(R.id.txt_endereco_cliente);
+            horario_pedido =itemView.findViewById(R.id.txt_horario_pedido);
+
         }
     }
 }

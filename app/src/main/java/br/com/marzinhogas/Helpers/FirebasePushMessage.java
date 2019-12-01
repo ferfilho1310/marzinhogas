@@ -20,6 +20,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
+import java.util.Objects;
 
 import br.com.marzinhogas.Controlers.MainActivity;
 import br.com.marzinhogas.Models.Pedido;
@@ -42,7 +43,7 @@ public class FirebasePushMessage extends FirebaseMessagingService {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                        Pedido pedido = documentSnapshot.toObject(Pedido.class);
+                        Pedido pedido = Objects.requireNonNull(documentSnapshot).toObject(Pedido.class);
 
                         i_entregadores.putExtra("pedido", pedido);
 
@@ -63,7 +64,7 @@ public class FirebasePushMessage extends FirebaseMessagingService {
                             notificationChannel.setDescription("Channel Description");
                             notificationChannel.enableLights(true);
                             notificationChannel.setLightColor(Color.GREEN);
-                            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+                            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000, 0, 1000});
                             notificationChannel.getSound();
                             notificationManager.createNotificationChannel(notificationChannel);
 
@@ -72,7 +73,9 @@ public class FirebasePushMessage extends FirebaseMessagingService {
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), notificacionid);
 
                         String pedidos = "Nome: " + map.get("nome_pedido") + "\nEndereço: " +
-                                map.get("endereco_pedido") + "\nProduto: " + map.get("nome_produto_pedido");
+                                map.get("endereco_pedido") + "\nProduto: " + map.get("nome_produto_pedido")
+                                + "\nHorário " + map.get("horairo_pedido") + "\nQuantidade de Agua: " + map.get("qtd_agua_pedido")
+                                + "\nQuantidade de Gás: " + map.get("qtd_gas_pedido");
 
                         builder.setColor(Color.WHITE)
                                 .setSmallIcon(R.drawable.logo_entrada)

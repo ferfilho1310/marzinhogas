@@ -9,33 +9,39 @@ public class Pedido implements Parcelable {
     private String nome;
     private String produto;
     private String endereco;
-    private int quantidade_gas;
-    private int quantidade_agua;
+    private String quantidade_gas;
+    private String quantidade_agua;
     private String data;
     private String user_id_pedido;
+    private String horario;
+    private Boolean entregue;
 
     public Pedido() {
     }
 
-    public Pedido(String nome, String produto, String endereco, int quantidade_gas,
-                  int quatidade_agua, String data, String user_id_pedido) {
+    public Pedido(String nome, String produto, String endereco, String quantidade_gas,
+                  String quantidade_agua, String data, String user_id_pedido, String horario, Boolean entregue) {
         this.nome = nome;
         this.produto = produto;
         this.endereco = endereco;
         this.quantidade_gas = quantidade_gas;
-        this.quantidade_agua = quatidade_agua;
+        this.quantidade_agua = quantidade_agua;
         this.data = data;
         this.user_id_pedido = user_id_pedido;
+        this.horario = horario;
+        this.entregue = entregue;
     }
 
     protected Pedido(Parcel in) {
         nome = in.readString();
         produto = in.readString();
         endereco = in.readString();
-        quantidade_gas = in.readInt();
-        quantidade_agua = in.readInt();
+        quantidade_gas = in.readString();
+        quantidade_agua = in.readString();
         data = in.readString();
         user_id_pedido = in.readString();
+        horario = in.readString();
+        entregue = Boolean.valueOf(in.readString());
     }
 
     public static final Creator<Pedido> CREATOR = new Creator<Pedido>() {
@@ -74,19 +80,19 @@ public class Pedido implements Parcelable {
         this.endereco = endereco;
     }
 
-    public int getQuantidade_gas() {
+    public String getQuantidade_gas() {
         return quantidade_gas;
     }
 
-    public void setQuantidade_gas(int quantidade_gas) {
+    public void setQuantidade_gas(String quantidade_gas) {
         this.quantidade_gas = quantidade_gas;
     }
 
-    public int getQuantidade_agua() {
+    public String getQuantidade_agua() {
         return quantidade_agua;
     }
 
-    public void setQuantidade_agua(int quatidade_agua) {
+    public void setQuantidade_agua(String quatidade_agua) {
         this.quantidade_agua = quatidade_agua;
     }
 
@@ -106,6 +112,22 @@ public class Pedido implements Parcelable {
         this.user_id_pedido = user_id_pedido;
     }
 
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public Boolean getEntregue() {
+        return entregue;
+    }
+
+    public void setEntregue(Boolean entregue) {
+        this.entregue = entregue;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -116,9 +138,11 @@ public class Pedido implements Parcelable {
         parcel.writeString(nome);
         parcel.writeString(produto);
         parcel.writeString(endereco);
-        parcel.writeInt(quantidade_gas);
-        parcel.writeInt(quantidade_agua);
+        parcel.writeString(quantidade_gas);
+        parcel.writeString(quantidade_agua);
         parcel.writeString(data);
         parcel.writeString(user_id_pedido);
+        parcel.writeString(horario);
+        parcel.writeString(String.valueOf(entregue));
     }
 }

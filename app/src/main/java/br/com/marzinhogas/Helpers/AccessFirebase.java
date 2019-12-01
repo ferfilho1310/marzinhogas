@@ -44,7 +44,8 @@ public class AccessFirebase {
     }
 
     public void pedidos(String id_user, String nome, String endereco, String data,
-                        String produto, int quantidade_gas, int quantidade_agua) {
+                        String produto, String quantidade_gas, String quantidade_agua,
+                        String horario, Boolean entregue) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -55,6 +56,8 @@ public class AccessFirebase {
         map.put("produto", produto);
         map.put("quantidade_gas", quantidade_gas);
         map.put("quantidade_agua", quantidade_agua);
+        map.put("horario",horario);
+        map.put("entregue",entregue);
 
         db_pedido.add(map);
 

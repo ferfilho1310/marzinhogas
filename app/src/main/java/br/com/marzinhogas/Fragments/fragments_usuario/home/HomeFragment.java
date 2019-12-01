@@ -23,10 +23,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import br.com.marzinhogas.Helpers.AccessFirebase;
@@ -51,7 +53,6 @@ public class HomeFragment extends Fragment {
     private CollectionReference cl_user = db_user.collection("Users");
 
     private Pedido pedido = new Pedido();
-    private Entregadores entregadores = new Entregadores();
     private Usuario usuario = new Usuario();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -103,12 +104,19 @@ public class HomeFragment extends Fragment {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         Date date = new Date();
                         String data = dateFormat.format(date);
+
+                        SimpleDateFormat horasFormat = new SimpleDateFormat("HH:mm:ss");
+                        Date horas = Calendar.getInstance().getTime();
+                        String horario = horasFormat.format(horas);
+
                         pedido.setData(data);
                         pedido.setUser_id_pedido(auth.getUid());
+                        pedido.setHorario(horario);
+                        pedido.setEntregue(false);
 
                         new AccessFirebase().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
                                 pedido.getData(), pedido.getProduto(),
-                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua());
+                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(),pedido.getHorario(),pedido.getEntregue());
 
                             Notification notification = new Notification();
 
@@ -120,6 +128,8 @@ public class HomeFragment extends Fragment {
                             notification.setData(pedido.getData());
                             notification.setQuantidade_agua(pedido.getQuantidade_agua());
                             notification.setQuantidade_gas(pedido.getQuantidade_gas());
+                            notification.setHorario(pedido.getHorario());
+                            notification.setEntregue(pedido.getEntregue());
 
                             new AccessFirebase().noitificacoes(usuario.getToken(), notification);
 
@@ -167,7 +177,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
-                pedido.setQuantidade_agua(numberPicker.getValue());
+                pedido.setQuantidade_agua(String.valueOf(numberPicker.getValue()));
 
             }
         });
@@ -176,7 +186,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
-                pedido.setQuantidade_gas(numberPicker.getValue());
+                pedido.setQuantidade_gas(String.valueOf(numberPicker.getValue()));
 
             }
         });
