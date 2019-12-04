@@ -17,7 +17,7 @@ import br.com.marzinhogas.R;
 public class EntrarUser extends AppCompatActivity {
 
     EditText email, senha;
-    TextView cadastre, esqueceu_senha, sou_entregador;
+    TextView cadastre, esqueceu_senha;
     Button entrar;
 
     AccessFirebase accessFirebase = new AccessFirebase();
@@ -34,7 +34,6 @@ public class EntrarUser extends AppCompatActivity {
         entrar = findViewById(R.id.btn_entrar);
         cadastre = findViewById(R.id.txt_cadastre_se);
         esqueceu_senha = findViewById(R.id.txt_esqueceu_senha);
-        sou_entregador = findViewById(R.id.txt_sou_entregador);
 
         accessFirebase.persistir_usuer(EntrarUser.this);
 
@@ -66,17 +65,5 @@ public class EntrarUser extends AppCompatActivity {
                 startActivity(i_esquece_senha);*/
             }
         });
-
-        sou_entregador.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                /*Intent i_sou_entregador = new Intent(EntrarUser.this, EntrarEntregadores.class);
-                startActivity(i_sou_entregador);
-*/
-            }
-        });
-
-
     }
 }

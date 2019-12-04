@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
 
     private Pedido pedido = new Pedido();
     private Usuario usuario = new Usuario();
+    private Entregadores entregadores = new Entregadores();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class HomeFragment extends Fragment {
 
                         new AccessFirebase().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
                                 pedido.getData(), pedido.getProduto(),
-                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(),pedido.getHorario(),pedido.getEntregue());
+                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
 
                             Notification notification = new Notification();
 
@@ -130,6 +131,7 @@ public class HomeFragment extends Fragment {
                             notification.setQuantidade_gas(pedido.getQuantidade_gas());
                             notification.setHorario(pedido.getHorario());
                             notification.setEntregue(pedido.getEntregue());
+                            notification.setId_cliente("xBMNRO2cLHUW85CAO3YKp1lQ5lh1");
 
                             new AccessFirebase().notificacoes(usuario.getToken(), notification);
 
