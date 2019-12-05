@@ -125,7 +125,6 @@ public class HomeFragment extends Fragment {
                             notification.setNome(pedido.getNome());
                             notification.setEndereco(pedido.getEndereco());
                             notification.setProduto(pedido.getProduto());
-                            notification.setEndereco(pedido.getEndereco());
                             notification.setData(pedido.getData());
                             notification.setQuantidade_agua(pedido.getQuantidade_agua());
                             notification.setQuantidade_gas(pedido.getQuantidade_gas());
