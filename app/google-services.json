@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "56985235580-ep21b6lq3p1lspvvmd0ucpge4j5053l8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.marzinhogas",
+            "certificate_hash": "a7fec72dbda9df3b7ef18c75af4c0407130ab3b7"
+          }
+        },
+        {
           "client_id": "56985235580-5gurpdccmjij31dn68rnsemo9ejsi9s8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -27,6 +35,43 @@
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.marzinhogas",
+            "certificate_hash": "1a25dcd749a38cedda61870799afefb2985f9d05"
+          }
+        },
+        {
+          "client_id": "56985235580-eth13bmdua24tmvmkoao715019g86c5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLW7WRFGrPxm-EpvwdkIUdZ6yCIhm7eVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56985235580-eth13bmdua24tmvmkoao715019g86c5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56985235580:android:a5da69000a765d489dd9f9",
+        "android_client_info": {
+          "package_name": "br.com.marzinhogasdelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56985235580-hvnfriv0gnta21p5tsfhfb9vr7h5h1po.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.marzinhogasdelivery",
             "certificate_hash": "1a25dcd749a38cedda61870799afefb2985f9d05"
           }
         },

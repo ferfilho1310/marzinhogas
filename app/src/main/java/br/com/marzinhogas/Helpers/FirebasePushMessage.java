@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,16 +30,19 @@ import br.com.marzinhogas.R;
 public class FirebasePushMessage extends FirebaseMessagingService {
 
     @Override
+
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
         final Map<String, String> map = remoteMessage.getData();
 
-        if (map == null || map.get("id") == null) return;
+        final String id_entregador = map.get("id_entregador");
+
+        if (map == null || id_entregador == null) return;
 
         final Intent i_entregadores = new Intent(this, MainActivity.class);
 
         FirebaseFirestore.getInstance().collection("notifications")
-                .document(Objects.requireNonNull(map.get("id")))
+                .document(id_entregador)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -64,7 +68,7 @@ public class FirebasePushMessage extends FirebaseMessagingService {
                             notificationChannel.setDescription("Channel Description");
                             notificationChannel.enableLights(true);
                             notificationChannel.setLightColor(Color.GREEN);
-                            notificationChannel.setVibrationPattern(new long[]{0, 1000, 0, 1000});
+                            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
                             notificationChannel.getSound();
                             notificationManager.createNotificationChannel(notificationChannel);
 
@@ -72,8 +76,9 @@ public class FirebasePushMessage extends FirebaseMessagingService {
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), notificacionid);
 
-                        String pedidos = "Nome: " + map.get("nome") + "\nEndereço: " +
-                                map.get("endereco") + "\nProduto: " + map.get("produto");
+                        String pedidos = "Nome: " + map.get("nome_cliente") + "\nEndereço: " +
+                                map.get("endereco_cliente") + "\nProduto: " + map.get("produto_cliente")
+                                + "\nHorário: " + map.get("hora_pedido");
 
                         builder.setColor(Color.WHITE)
                                 .setSmallIcon(R.drawable.logo_entrada)
