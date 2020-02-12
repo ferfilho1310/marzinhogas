@@ -33,7 +33,6 @@ public class AccessFirebase {
     CollectionReference db_users = FirebaseFirestore.getInstance().collection("Users");
     CollectionReference db_pedido = FirebaseFirestore.getInstance().collection("Pedidos");
     CollectionReference db_notificacoes = FirebaseFirestore.getInstance().collection("notifications");
-    CollectionReference db_entregadores= FirebaseFirestore.getInstance().collection("Entregadores");
 
     ProgressDialog progressDialog;
 
@@ -62,7 +61,6 @@ public class AccessFirebase {
         db_pedido.add(map);
 
     }
-
 
     public void cadastrar_user(final String nome, final String endereco, final String email, final String senha,
                                final String senhaconfir, final String sexo, final String token, final Activity activity) {
@@ -156,99 +154,6 @@ public class AccessFirebase {
         }
     }
 
-    public void cadastrar_entregador(final String nome, final String email, final String senha,
-                                     final String senhaconfir, final String token, final String sexo, final boolean online,
-                                     final Activity activity) {
-
-        FirebaseApp.initializeApp(activity);
-
-        if (TextUtils.isEmpty(nome)) {
-            Toast.makeText(activity, "Digite seu nome", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(activity, "Informe um e-mail.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(senha)) {
-            Toast.makeText(activity, "Informe uma senha.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(senhaconfir)) {
-
-            Toast.makeText(activity, "Confirme a senha", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (senha.equals(senhaconfir)) {
-
-            progressDialog = new ProgressDialog(activity);
-            progressDialog.setMessage("Cadastrando...");
-            progressDialog.show();
-
-            firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-
-                    if (task.isSuccessful()) {
-
-                        Map<String, Object> map = new HashMap<>();
-
-                        map.put("online",online);
-                        map.put("id_user", firebaseAuth.getUid());
-                        map.put("nome", nome);
-                        map.put("email", email);
-                        map.put("senha", senha);
-                        map.put("confirmarsenha", senhaconfir);
-                        map.put("sexo", sexo);
-                        map.put("token", token);
-
-                        /*Intent intent = new Intent(activity, MainEntregadores.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        activity.startActivity(intent);*/
-
-                        db_entregadores.document(firebaseAuth.getUid()).set(map);
-
-                        Toast.makeText(activity, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
-
-                    } else if (!task.isSuccessful()) {
-                        try {
-                            throw task.getException();
-                        } catch (FirebaseAuthWeakPasswordException e) {
-
-                            Toast.makeText(activity, "Senha inferior a 6 caracteres", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-
-                        } catch (FirebaseAuthInvalidCredentialsException e) {
-
-                            Toast.makeText(activity, "E-mail inválido", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-
-                        } catch (FirebaseAuthUserCollisionException e) {
-
-                            Toast.makeText(activity, "Usuário já cadastrado", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-
-                        } catch (Exception e) {
-
-                            Toast.makeText(activity, "Ops!Erro a cadastrar o usuário", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        }
-                    }
-                }
-
-            });
-        } else {
-
-            Toast.makeText(activity, "As senhas estão diferentes.", Toast.LENGTH_LONG).show();
-            return;
-
-        }
-    }
-
     public void persistir_usuer(Activity activity) {
 
         FirebaseApp.initializeApp(activity);
@@ -299,51 +204,6 @@ public class AccessFirebase {
                         i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(i_entrar_prof);
                         activity.finish();
-
-                        Toast.makeText(activity, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(activity, "Erro ao efetuar o login. Verifique os dados digitados", Toast.LENGTH_LONG).show();
-                    }
-
-                } catch (Exception e) {
-
-                    Toast.makeText(activity, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_LONG).show();
-                }
-
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-    public void entrar_firebase_entregador(final String email, String senha, final Activity activity) {
-
-        FirebaseApp.initializeApp(activity);
-
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(activity, "Digite seu e-mail", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(senha)) {
-            Toast.makeText(activity, "Informe uma senha.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        final ProgressDialog progressDialog = new ProgressDialog(activity);
-
-        progressDialog.setMessage("Entrando...");
-        progressDialog.show();
-
-        firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                try {
-                    if (task.isSuccessful()) {
-
-                        /*Intent i_entrar_prof = new Intent(activity, MainEntregadores.class);
-                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        activity.startActivity(i_entrar_prof);
-                        activity.finish();*/
 
                         Toast.makeText(activity, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
                     } else {

@@ -47,13 +47,6 @@
         <item>Água e Gás</item>
 
     </string-array>
-    <string name="title_activity_cadastro_entregadores">CadastroEntregadores</string>
-    <string name="title_activity_entrar_entregadores">EntrarEntregadores</string>
-    <string name="title_activity_main_entregadores">MainEntregadores</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
 
 </resources>
