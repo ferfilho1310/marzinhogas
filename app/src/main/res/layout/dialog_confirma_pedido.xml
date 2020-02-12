@@ -3,10 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:paddingTop="24dp"
-    android:padding="24dp"
+   android:padding="24dp"
     android:background="@android:color/transparent"
     android:gravity="center">
 

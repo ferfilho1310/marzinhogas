@@ -23,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -32,7 +31,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import br.com.marzinhogas.Helpers.AccessFirebase;
-import br.com.marzinhogas.Helpers.PedidoAplication;
 import br.com.marzinhogas.Models.Entregadores;
 import br.com.marzinhogas.Models.Notification;
 import br.com.marzinhogas.Models.Pedido;
@@ -54,7 +52,7 @@ public class HomeFragment extends Fragment {
 
     private Pedido pedido = new Pedido();
     private Usuario usuario = new Usuario();
-    private Entregadores entregadores = new Entregadores();
+    private Entregadores entregadorestoken = new Entregadores();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +82,7 @@ public class HomeFragment extends Fragment {
 
         spinner();
         number_pickers();
+        picktokenentregador();
         lerdadosusuario(id_user_logado);
 
         pedir.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +105,7 @@ public class HomeFragment extends Fragment {
                         Date date = new Date();
                         String data = dateFormat.format(date);
 
-                        SimpleDateFormat horasFormat = new SimpleDateFormat("HH:mm:ss");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat horasFormat = new SimpleDateFormat("HH:mm:ss");
                         Date horas = Calendar.getInstance().getTime();
                         String horario = horasFormat.format(horas);
 
@@ -132,7 +131,7 @@ public class HomeFragment extends Fragment {
                             notification.setEntregue(pedido.getEntregue());
                             notification.setId_cliente("xBMNRO2cLHUW85CAO3YKp1lQ5lh1");
 
-                            new AccessFirebase().notificacoes(usuario.getToken(), notification);
+                            new AccessFirebase().notificacoes(entregadorestoken.getToken(), notification);
 
                         dialog.dismiss();
                     }
@@ -154,6 +153,25 @@ public class HomeFragment extends Fragment {
         updatetoken();
 
         return root;
+    }
+
+    private void picktokenentregador(){
+
+        FirebaseFirestore.getInstance().collection("Entregadores")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for(Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)){
+
+                            String token_entregador = entregadores.getToken();
+                            entregadorestoken.setToken(token_entregador);
+                        }
+                    }
+                });
     }
 
     private void updatetoken() {
