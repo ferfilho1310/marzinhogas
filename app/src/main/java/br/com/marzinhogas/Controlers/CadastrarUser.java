@@ -59,7 +59,7 @@ public class CadastrarUser extends AppCompatActivity {
         fem = findViewById(R.id.rd_feminino);
         masc = findViewById(R.id.rd_masculino);
 
-        new AccessFirebase().persistir_usuer(CadastrarUser.this);
+        AccessFirebase.getInstance().persistir_usuer(CadastrarUser.this);
 
         rg_sexo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -110,7 +110,7 @@ public class CadastrarUser extends AppCompatActivity {
                 usuario.setSenha(senha_cad.getText().toString());
                 usuario.setConfirmarsenha(confirma_senha.getText().toString());
 
-                new AccessFirebase().cadastrar_user(usuario.getNome(), usuario.getEndereco(),
+                AccessFirebase.getInstance().cadastrar_user(usuario.getNome(), usuario.getEndereco(),
                         usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
                         usuario.getSexo(), usuario.getToken(), CadastrarUser.this);
 

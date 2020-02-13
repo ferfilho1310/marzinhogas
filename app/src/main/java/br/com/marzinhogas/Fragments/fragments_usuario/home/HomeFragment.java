@@ -105,7 +105,8 @@ public class HomeFragment extends Fragment {
                         Date date = new Date();
                         String data = dateFormat.format(date);
 
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat horasFormat = new SimpleDateFormat("HH:mm:ss");
+                        @SuppressLint("SimpleDateFormat")
+                        SimpleDateFormat horasFormat = new SimpleDateFormat("HH:mm:ss");
                         Date horas = Calendar.getInstance().getTime();
                         String horario = horasFormat.format(horas);
 
@@ -114,24 +115,32 @@ public class HomeFragment extends Fragment {
                         pedido.setHorario(horario);
                         pedido.setEntregue(false);
 
-                        new AccessFirebase().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
+                        Notification notification = new Notification();
+
+                        notification.setUser_id_pedido(pedido.getUser_id_pedido());
+                        notification.setNome(pedido.getNome());
+                        notification.setEndereco(pedido.getEndereco());
+                        notification.setProduto(pedido.getProduto());
+                        notification.setData(pedido.getData());
+                        notification.setQuantidade_agua(pedido.getQuantidade_agua());
+                        notification.setQuantidade_gas(pedido.getQuantidade_gas());
+                        notification.setHorario(pedido.getHorario());
+                        notification.setEntregue(pedido.getEntregue());
+                        notification.setId_cliente("xBMNRO2cLHUW85CAO3YKp1lQ5lh1");
+
+                        AccessFirebase.getInstance().notificacoes(entregadorestoken.getToken(), notification);
+
+                        AccessFirebase.getInstance().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
                                 pedido.getData(), pedido.getProduto(),
                                 pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
 
-                            Notification notification = new Notification();
+                        AccessFirebase.getInstance().pedidos_permanentes(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
+                                pedido.getData(), pedido.getProduto(),
+                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
 
-                            notification.setUser_id_pedido(pedido.getUser_id_pedido());
-                            notification.setNome(pedido.getNome());
-                            notification.setEndereco(pedido.getEndereco());
-                            notification.setProduto(pedido.getProduto());
-                            notification.setData(pedido.getData());
-                            notification.setQuantidade_agua(pedido.getQuantidade_agua());
-                            notification.setQuantidade_gas(pedido.getQuantidade_gas());
-                            notification.setHorario(pedido.getHorario());
-                            notification.setEntregue(pedido.getEntregue());
-                            notification.setId_cliente("xBMNRO2cLHUW85CAO3YKp1lQ5lh1");
-
-                            new AccessFirebase().notificacoes(entregadorestoken.getToken(), notification);
+                        AccessFirebase.getInstance().pedidos_temporarios(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
+                                pedido.getData(), pedido.getProduto(),
+                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
 
                         dialog.dismiss();
                     }
@@ -146,7 +155,6 @@ public class HomeFragment extends Fragment {
                 });
 
                 dialog.show();
-
             }
         });
 
@@ -155,7 +163,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void picktokenentregador(){
+    private void picktokenentregador() {
 
         FirebaseFirestore.getInstance().collection("Entregadores")
                 .get()
@@ -165,7 +173,7 @@ public class HomeFragment extends Fragment {
 
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
 
-                        for(Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)){
+                        for (Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)) {
 
                             String token_entregador = entregadores.getToken();
                             entregadorestoken.setToken(token_entregador);

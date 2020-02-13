@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         FirebaseApp.initializeApp(MainActivity.this);
 
-
     }
 
     @Override
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                    new AccessFirebase().sign_out_firebase(MainActivity.this);
+                  AccessFirebase.getInstance().sign_out_firebase(MainActivity.this);
 
                 }
             }).setNegativeButton("Cancelar", null);

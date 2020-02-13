@@ -20,8 +20,6 @@ public class EntrarUser extends AppCompatActivity {
     TextView cadastre, esqueceu_senha;
     Button entrar;
 
-    AccessFirebase accessFirebase = new AccessFirebase();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +33,13 @@ public class EntrarUser extends AppCompatActivity {
         cadastre = findViewById(R.id.txt_cadastre_se);
         esqueceu_senha = findViewById(R.id.txt_esqueceu_senha);
 
-        accessFirebase.persistir_usuer(EntrarUser.this);
+        AccessFirebase.getInstance().persistir_usuer(EntrarUser.this);
 
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                accessFirebase.entrar_firebase(email.getText().toString(), senha.getText().toString(), EntrarUser.this);
+                AccessFirebase.getInstance().entrar_firebase(email.getText().toString(), senha.getText().toString(), EntrarUser.this);
 
             }
         });

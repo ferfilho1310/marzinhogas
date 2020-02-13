@@ -26,22 +26,41 @@ import br.com.marzinhogas.Controlers.EntrarUser;
 import br.com.marzinhogas.Controlers.MainActivity;
 import br.com.marzinhogas.Models.Notification;
 
-public class AccessFirebase {
+public class AccessFirebase implements IAccessFirebase {
+
+    private static AccessFirebase accessFirebase;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     CollectionReference db_users = FirebaseFirestore.getInstance().collection("Users");
     CollectionReference db_pedido = FirebaseFirestore.getInstance().collection("Pedidos");
     CollectionReference db_notificacoes = FirebaseFirestore.getInstance().collection("notifications");
+    CollectionReference db_pedido_temp = FirebaseFirestore.getInstance().collection("PedidoTemp");
+    CollectionReference db_pedido_permanente = FirebaseFirestore.getInstance().collection("PedidoPerm");
 
     ProgressDialog progressDialog;
 
-    public void notificacoes(String user_token, Notification notification){
+    private AccessFirebase(){
+
+    }
+
+    public static synchronized AccessFirebase getInstance() {
+
+        if (accessFirebase == null) {
+            accessFirebase = new AccessFirebase();
+        }
+        return accessFirebase;
+    }
+
+
+    @Override
+    public void notificacoes(String user_token, Notification notification) {
 
         db_notificacoes.document(user_token).set(notification);
 
     }
 
+    @Override
     public void pedidos(String id_user, String nome, String endereco, String data,
                         String produto, int quantidade_gas, int quantidade_agua,
                         String horario, Boolean entregue) {
@@ -55,13 +74,54 @@ public class AccessFirebase {
         map.put("produto", produto);
         map.put("quantidade_gas", quantidade_gas);
         map.put("quantidade_agua", quantidade_agua);
-        map.put("horario",horario);
-        map.put("entregue",entregue);
+        map.put("horario", horario);
+        map.put("entregue", entregue);
 
         db_pedido.add(map);
 
     }
 
+    @Override
+    public void pedidos_temporarios(String id_user, String nome, String endereco, String data, String produto,
+                                    int quantidade_gas, int quantidade_agua, String horario, Boolean entregue) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id_user", id_user);
+        map.put("nome", nome);
+        map.put("endereco", endereco);
+        map.put("data", data);
+        map.put("produto", produto);
+        map.put("quantidade_gas", quantidade_gas);
+        map.put("quantidade_agua", quantidade_agua);
+        map.put("horario", horario);
+        map.put("entregue", entregue);
+
+        db_pedido_temp.add(map);
+
+    }
+
+    @Override
+    public void pedidos_permanentes(String id_user, String nome, String endereco, String data, String produto,
+                                    int quantidade_gas, int quantidade_agua, String horario, Boolean entregue) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id_user", id_user);
+        map.put("nome", nome);
+        map.put("endereco", endereco);
+        map.put("data", data);
+        map.put("produto", produto);
+        map.put("quantidade_gas", quantidade_gas);
+        map.put("quantidade_agua", quantidade_agua);
+        map.put("horario", horario);
+        map.put("entregue", entregue);
+
+        db_pedido_permanente.add(map);
+
+    }
+
+    @Override
     public void cadastrar_user(final String nome, final String endereco, final String email, final String senha,
                                final String senhaconfir, final String sexo, final String token, final Activity activity) {
 
@@ -154,6 +214,7 @@ public class AccessFirebase {
         }
     }
 
+    @Override
     public void persistir_usuer(Activity activity) {
 
         FirebaseApp.initializeApp(activity);
@@ -166,6 +227,7 @@ public class AccessFirebase {
         }
     }
 
+    @Override
     public void sign_out_firebase(Activity activity) {
 
         Intent intent = new Intent(activity, EntrarUser.class);
@@ -175,6 +237,7 @@ public class AccessFirebase {
         firebaseAuth.signOut();
     }
 
+    @Override
     public void entrar_firebase(final String email, String senha, final Activity activity) {
 
         FirebaseApp.initializeApp(activity);
@@ -220,6 +283,7 @@ public class AccessFirebase {
         });
     }
 
+    @Override
     public void reset_senha(final String email, final Activity context) {
 
         if (TextUtils.isEmpty(email)) {
