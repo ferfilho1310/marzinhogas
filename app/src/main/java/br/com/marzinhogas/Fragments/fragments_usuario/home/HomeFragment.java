@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,10 +26,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Entregadores;
@@ -53,6 +57,7 @@ public class HomeFragment extends Fragment {
     private Pedido pedido = new Pedido();
     private Usuario usuario = new Usuario();
     private Entregadores entregadorestoken = new Entregadores();
+    private Notification notification = new Notification();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,9 +69,7 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_pedir, container, false);
 
         if (firebaseUser != null) {
-
             id_user_logado = firebaseUser.getUid();
-
         }
 
         sp_produtos = root.findViewById(R.id.spinner);
@@ -80,10 +83,30 @@ public class HomeFragment extends Fragment {
         nb_qtd_gas.setMinValue(0);
         nb_qtd_gas.setMaxValue(20);
 
+        FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        String recuperar_endereco;
+                        String recuperar_nome;
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
+
+                            recuperar_endereco = usuario_banco.getEndereco();
+                            recuperar_nome = usuario_banco.getNome();
+
+                            pedido.setEndereco(recuperar_endereco);
+                            pedido.setNome(recuperar_nome);
+                        }
+                    }
+                });
+
         spinner();
         number_pickers();
-        picktokenentregador();
-        lerdadosusuario(id_user_logado);
 
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,47 +123,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        Date date = new Date();
-                        String data = dateFormat.format(date);
-
-                        @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat horasFormat = new SimpleDateFormat("HH:mm:ss");
-                        Date horas = Calendar.getInstance().getTime();
-                        String horario = horasFormat.format(horas);
-
-                        pedido.setData(data);
-                        pedido.setUser_id_pedido(auth.getUid());
-                        pedido.setHorario(horario);
-                        pedido.setEntregue(false);
-
-                        Notification notification = new Notification();
-
-                        notification.setUser_id_pedido(pedido.getUser_id_pedido());
-                        notification.setNome(pedido.getNome());
-                        notification.setEndereco(pedido.getEndereco());
-                        notification.setProduto(pedido.getProduto());
-                        notification.setData(pedido.getData());
-                        notification.setQuantidade_agua(pedido.getQuantidade_agua());
-                        notification.setQuantidade_gas(pedido.getQuantidade_gas());
-                        notification.setHorario(pedido.getHorario());
-                        notification.setEntregue(pedido.getEntregue());
-                        notification.setId_cliente("xBMNRO2cLHUW85CAO3YKp1lQ5lh1");
-
-                        AccessFirebase.getInstance().notificacoes(entregadorestoken.getToken(), notification);
-
-                        AccessFirebase.getInstance().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
-                                pedido.getData(), pedido.getProduto(),
-                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
-
-                        AccessFirebase.getInstance().pedidos_permanentes(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
-                                pedido.getData(), pedido.getProduto(),
-                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
-
-                        AccessFirebase.getInstance().pedidos_temporarios(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
-                                pedido.getData(), pedido.getProduto(),
-                                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
+                        picktokenentregador();
 
                         dialog.dismiss();
                     }
@@ -165,37 +148,101 @@ public class HomeFragment extends Fragment {
 
     private void picktokenentregador() {
 
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String data = dateFormat.format(date);
+
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat horasFormat = new SimpleDateFormat("HH:mm:ss");
+        Date horas = Calendar.getInstance().getTime();
+        String horario = horasFormat.format(horas);
+
+        pedido.setData(data);
+        pedido.setUser_id_pedido(auth.getUid());
+        pedido.setHorario(horario);
+        pedido.setEntregue(false);
+
         FirebaseFirestore.getInstance().collection("Entregadores")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+                        String token_entregador;
+                        String id_entregador;
+
+                        List<String> ls_token_entregador = new ArrayList<>();
+                        List<String> ls_id_entregador = new ArrayList<>();
+
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
 
                         for (Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)) {
 
-                            String token_entregador = entregadores.getToken();
-                            entregadorestoken.setToken(token_entregador);
+                            token_entregador = entregadores.getToken();
+                            id_entregador = entregadores.getId_user();
+
+                            ls_token_entregador.add(token_entregador);
+                            ls_id_entregador.add(id_entregador);
+                        }
+
+                        for (int i = 0; i < ls_token_entregador.size(); i++) {
+
+                            entregadorestoken.setToken(ls_token_entregador.get(i));
+                            entregadorestoken.setId_user(ls_id_entregador.get(i));
+                            notification.setBody_pedido("Acesse o app para verificar.");
+                            notification.setId_cliente(entregadorestoken.getId_user());
+
+                            //notification.setUser_id_pedido(pedido.getUser_id_pedido());
+
+                            /*notification.setNome("teste");
+                            notification.setEndereco("teste");
+                            notification.setProduto(pedido.getProduto());
+                            notification.setData(pedido.getData());
+                            notification.setQuantidade_agua(pedido.getQuantidade_agua());
+                            notification.setQuantidade_gas(pedido.getQuantidade_gas());
+                            notification.setHorario(pedido.getHorario());
+                            notification.setEntregue(pedido.getEntregue());
+                            */
+
+                            AccessFirebase.getInstance().notificacoes(entregadorestoken.getToken(), notification);
                         }
                     }
                 });
+
+        AccessFirebase.getInstance().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
+                pedido.getData(), pedido.getProduto(),
+                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
+
+        AccessFirebase.getInstance().pedidos_permanentes(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
+                pedido.getData(), pedido.getProduto(),
+                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
+
+        AccessFirebase.getInstance().pedidos_temporarios(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
+                pedido.getData(), pedido.getProduto(),
+                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
+
     }
 
     private void updatetoken() {
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        String uid = auth.getUid();
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
 
-        usuario.setToken(token);
+                String uid = auth.getUid();
+                String token = instanceIdResult.getToken();
+                usuario.setToken(token);
 
-        if (uid != null) {
+                if (uid != null) {
 
-            FirebaseFirestore.getInstance().collection("Users")
-                    .document(uid)
-                    .update("token", token);
+                    FirebaseFirestore.getInstance().collection("Users")
+                            .document(uid)
+                            .update("token", token);
 
-        }
+                }
+            }
+        });
     }
 
     public void number_pickers() {
@@ -249,30 +296,5 @@ public class HomeFragment extends Fragment {
 
             }
         });
-    }
-
-    public void lerdadosusuario(String id_usuario_logado) {
-
-        //buscar os dados do usuário logado Ex.: nome, endereço
-
-        cl_user.whereEqualTo("id_user", id_usuario_logado)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
-
-                            String recuperar_endereco = usuario_banco.getEndereco();
-                            String recuperar_nome = usuario_banco.getNome();
-
-                            pedido.setEndereco(recuperar_endereco);
-                            pedido.setNome(recuperar_nome);
-
-                        }
-                    }
-                });
     }
 }

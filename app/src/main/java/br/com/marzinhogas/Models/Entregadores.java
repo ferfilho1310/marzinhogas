@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class Entregadores extends Usuario implements Parcelable {
 
     private boolean estado;
+    private String id_user;
 
     public Entregadores() {
     }
@@ -38,6 +39,14 @@ public class Entregadores extends Usuario implements Parcelable {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public String getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(String id_entregador) {
+        this.id_user = id_entregador;
     }
 
     @Override

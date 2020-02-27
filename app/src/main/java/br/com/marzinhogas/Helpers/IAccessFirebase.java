@@ -2,6 +2,9 @@ package br.com.marzinhogas.Helpers;
 
 import android.app.Activity;
 
+import java.util.List;
+import java.util.Map;
+
 import br.com.marzinhogas.Models.Notification;
 
 public interface IAccessFirebase {
