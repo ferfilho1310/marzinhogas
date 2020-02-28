@@ -9,8 +9,6 @@
         android:id="@+id/rc_pedidos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="2dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"/>
+        android:padding="8dp"/>
 
 </LinearLayout>
