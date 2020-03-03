@@ -2,14 +2,75 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-   android:padding="24dp"
     android:background="@android:color/transparent"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dados do pedido"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/conf_nome"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="Nome" />
+
+    <TextView
+        android:id="@+id/conf_endereco"
+        android:layout_marginTop="8dp"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Endereço" />
+
+    <TextView
+        android:textSize="15sp"
+        android:id="@+id/conf_produto_agua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantidade de água: "
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:textSize="15sp"
+        android:id="@+id/conf_qtd_agua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"/>
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/conf_produto_gas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantidade de gás: "
+        android:textSize="15sp"/>
+
+    <TextView
+        android:textSize="15sp"
+        android:id="@+id/conf_qtd_gas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Podemos confirmar seu pedido?"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />

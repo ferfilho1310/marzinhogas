@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -59,6 +61,8 @@ public class HomeFragment extends Fragment {
     private Entregadores entregadorestoken = new Entregadores();
     private Notification notification = new Notification();
 
+    LinearLayout lout_agua, lout_gas;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -76,11 +80,16 @@ public class HomeFragment extends Fragment {
         nb_qtd_agua = root.findViewById(R.id.nb_qtd_agua);
         nb_qtd_gas = root.findViewById(R.id.nb_qtd_gas);
         pedir = root.findViewById(R.id.btn_pedir);
+        lout_agua = root.findViewById(R.id.layout_qtd_agua);
+        lout_gas = root.findViewById(R.id.layout_qtd_gas);
 
-        nb_qtd_agua.setMinValue(0);
+        lout_agua.setVisibility(View.GONE);
+        lout_gas.setVisibility(View.GONE);
+
+        nb_qtd_agua.setMinValue(1);
         nb_qtd_agua.setMaxValue(20);
 
-        nb_qtd_gas.setMinValue(0);
+        nb_qtd_gas.setMinValue(1);
         nb_qtd_gas.setMaxValue(20);
 
         FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
@@ -108,6 +117,7 @@ public class HomeFragment extends Fragment {
         spinner();
         number_pickers();
 
+
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +125,16 @@ public class HomeFragment extends Fragment {
                 final Dialog dialog = new Dialog(getActivity());
 
                 dialog.setContentView(R.layout.dialog_confirma_pedido);
+
+                TextView confirma_nome = dialog.findViewById(R.id.conf_nome);
+                TextView confirma_endereco = dialog.findViewById(R.id.conf_endereco);
+                TextView confirma_qtd_agua = dialog.findViewById(R.id.conf_qtd_agua);
+                TextView confirma_qts_gas = dialog.findViewById(R.id.conf_qtd_gas);
+
+                confirma_nome.setText(pedido.getNome());
+                confirma_endereco.setText(pedido.getEndereco());
+                confirma_qtd_agua.setText(String.valueOf(pedido.getQuantidade_agua()));
+                confirma_qts_gas.setText(String.valueOf(pedido.getQuantidade_gas()));
 
                 Button ok = dialog.findViewById(R.id.btn_OK);
                 Button cancelar = dialog.findViewById(R.id.btn_cancelar);
@@ -281,12 +301,24 @@ public class HomeFragment extends Fragment {
 
                 String nome_produto = sp_produtos.getSelectedItem().toString();
 
-                if (nome_produto == "Selecione") {
+                if (nome_produto.equals("Água")) {
 
-                    Toast.makeText(getActivity(), "Informe o produto desejado", Toast.LENGTH_SHORT).show();
+                    lout_agua.setVisibility(View.VISIBLE);
+                    lout_gas.setVisibility(View.GONE);
+                    pedido.setProduto(nome_produto);
+                }
 
-                } else {
+                if (nome_produto.equals("Gás")) {
 
+                    lout_gas.setVisibility(View.VISIBLE);
+                    lout_agua.setVisibility(View.GONE);
+                    pedido.setProduto(nome_produto);
+                }
+
+                if (nome_produto.equals("Água e Gás")) {
+
+                    lout_agua.setVisibility(View.VISIBLE);
+                    lout_gas.setVisibility(View.VISIBLE);
                     pedido.setProduto(nome_produto);
                 }
             }

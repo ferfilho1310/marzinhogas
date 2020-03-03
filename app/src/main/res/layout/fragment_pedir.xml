@@ -66,56 +66,83 @@
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="196dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="88dp"
-                android:layout_height="38dp"
+            <LinearLayout
+                android:id="@+id/layout_qtd_agua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/quantidade_de_gua"
-                android:textColor="@android:color/black"
-                app:layout_constraintBottom_toTopOf="@+id/nb_qtd_agua"
-                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/layout_qtd_gas"
+                app:layout_constraintHorizontal_bias="0.302"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <NumberPicker
-                android:id="@+id/nb_qtd_agua"
-                android:layout_width="66dp"
-                android:layout_height="113dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/nb_qtd_gas"
-                app:layout_constraintHorizontal_bias="0.368"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="88dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="40dp"
-                android:gravity="center"
-                android:text="@string/quantidade_de_gas"
-                android:textColor="@android:color/black"
-                app:layout_constraintBottom_toTopOf="@+id/nb_qtd_gas"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.551" />
+                app:layout_constraintVertical_bias="0.448">
 
-            <NumberPicker
-                android:id="@+id/nb_qtd_gas"
-                android:layout_width="64dp"
-                android:layout_height="113dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="16dp"
+                <TextView
+                    android:layout_width="88dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:text="@string/quantidade_de_gua"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toTopOf="@+id/nb_qtd_agua"
+                    app:layout_constraintEnd_toStartOf="@+id/textView2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <NumberPicker
+                    android:id="@+id/nb_qtd_agua"
+                    android:layout_width="66dp"
+                    android:layout_height="113dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/nb_qtd_gas"
+                    app:layout_constraintHorizontal_bias="0.368"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_qtd_gas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.448"
+                tools:layout_editor_absoluteX="88dp"
+                tools:ignore="MissingConstraints">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="88dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:text="@string/quantidade_de_gas"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toTopOf="@+id/nb_qtd_gas"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.551" />
+
+                <NumberPicker
+                    android:id="@+id/nb_qtd_gas"
+                    android:layout_width="64dp"
+                    android:layout_height="113dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_pedir"
