@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import br.com.marzinhogas.Adapters.AdapterPedidosCliente;
+import br.com.marzinhogas.Adapters.AdapterViewEmpty;
 import br.com.marzinhogas.Models.Pedido;
 import br.com.marzinhogas.R;
 
@@ -37,6 +39,7 @@ public class GalleryFragment extends Fragment {
     CollectionReference cl_pedidos = firebaseAuth.collection("Pedidos");
 
     String id_user;
+    TextView txt_primeiro_pedido;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,8 +49,12 @@ public class GalleryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_registro_pedidos, container, false);
 
         rc_pedidos_feitos = root.findViewById(R.id.rc_pedidos);
+        txt_primeiro_pedido = root.findViewById(R.id.txt_registro_pedido_cliente);
 
         lerpedidosfeitos();
+
+        AdapterViewEmpty av_view_empty = new AdapterViewEmpty(txt_primeiro_pedido,rc_pedidos_feitos);
+        adapterPedidosCliente.registerAdapterDataObserver(av_view_empty);
 
         return root;
     }

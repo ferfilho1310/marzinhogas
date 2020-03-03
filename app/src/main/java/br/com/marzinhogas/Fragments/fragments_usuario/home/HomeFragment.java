@@ -2,6 +2,7 @@ package br.com.marzinhogas.Fragments.fragments_usuario.home;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import br.com.marzinhogas.Controlers.SplashPedidoFinalizado;
 import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Entregadores;
 import br.com.marzinhogas.Models.Notification;
@@ -86,10 +88,10 @@ public class HomeFragment extends Fragment {
         lout_agua.setVisibility(View.GONE);
         lout_gas.setVisibility(View.GONE);
 
-        nb_qtd_agua.setMinValue(1);
+        nb_qtd_agua.setMinValue(0);
         nb_qtd_agua.setMaxValue(20);
 
-        nb_qtd_gas.setMinValue(1);
+        nb_qtd_gas.setMinValue(0);
         nb_qtd_gas.setMaxValue(20);
 
         FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
@@ -117,7 +119,6 @@ public class HomeFragment extends Fragment {
         spinner();
         number_pickers();
 
-
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,6 +145,9 @@ public class HomeFragment extends Fragment {
                     public void onClick(View view) {
 
                         picktokenentregador();
+
+                        Intent i_splash = new Intent(getActivity(), SplashPedidoFinalizado.class);
+                        startActivity(i_splash);
 
                         dialog.dismiss();
                     }
@@ -320,6 +324,12 @@ public class HomeFragment extends Fragment {
                     lout_agua.setVisibility(View.VISIBLE);
                     lout_gas.setVisibility(View.VISIBLE);
                     pedido.setProduto(nome_produto);
+                }
+
+                if(nome_produto.equals("Selecione")){
+                    lout_agua.setVisibility(View.GONE);
+                    lout_gas.setVisibility(View.GONE);
+
                 }
             }
 

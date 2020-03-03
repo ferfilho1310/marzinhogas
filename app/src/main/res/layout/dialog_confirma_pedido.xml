@@ -12,10 +12,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dados do pedido"
+        android:gravity="center"
         android:textSize="30sp"
         android:textStyle="bold" />
 
