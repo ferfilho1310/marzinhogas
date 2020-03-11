@@ -42,11 +42,9 @@ public class AccessFirebase implements IAccessFirebase {
     ProgressDialog progressDialog;
 
     private AccessFirebase(){
-
     }
 
     public static synchronized AccessFirebase getInstance() {
-
         if (accessFirebase == null) {
             accessFirebase = new AccessFirebase();
         }
@@ -56,9 +54,7 @@ public class AccessFirebase implements IAccessFirebase {
 
     @Override
     public void notificacoes(String user_token, Notification notification) {
-
         db_notificacoes.document(user_token).set(notification);
-
     }
 
     @Override
@@ -79,7 +75,6 @@ public class AccessFirebase implements IAccessFirebase {
         map.put("entregue", entregue);
 
         db_pedido.add(map);
-
     }
 
     @Override
@@ -99,7 +94,6 @@ public class AccessFirebase implements IAccessFirebase {
         map.put("entregue", entregue);
 
         db_pedido_temp.add(map);
-
     }
 
     @Override
@@ -119,7 +113,6 @@ public class AccessFirebase implements IAccessFirebase {
         map.put("entregue", entregue);
 
         db_pedido_permanente.add(map);
-
     }
 
     @Override
@@ -144,7 +137,6 @@ public class AccessFirebase implements IAccessFirebase {
         }
 
         if (TextUtils.isEmpty(senhaconfir)) {
-
             Toast.makeText(activity, "Confirme a senha", Toast.LENGTH_LONG).show();
             return;
         }
@@ -211,7 +203,6 @@ public class AccessFirebase implements IAccessFirebase {
 
             Toast.makeText(activity, "As senhas estão diferentes.", Toast.LENGTH_LONG).show();
             return;
-
         }
     }
 
@@ -273,12 +264,10 @@ public class AccessFirebase implements IAccessFirebase {
                     } else {
                         Toast.makeText(activity, "Erro ao efetuar o login. Verifique os dados digitados", Toast.LENGTH_LONG).show();
                     }
-
                 } catch (Exception e) {
 
                     Toast.makeText(activity, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_LONG).show();
                 }
-
                 progressDialog.dismiss();
             }
         });

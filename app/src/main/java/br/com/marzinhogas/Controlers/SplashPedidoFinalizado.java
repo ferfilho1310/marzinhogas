@@ -5,28 +5,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import br.com.marzinhogas.R;
 
 public class SplashPedidoFinalizado extends AppCompatActivity {
+
+    FloatingActionButton finalizar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_pedido_finalizado);
 
-        Handler h_splash = new Handler();
+        finalizar = findViewById(R.id.btn_finalizar);
 
-        h_splash.postDelayed(new Runnable() {
+        finalizar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
+            public void onClick(View v) {
 
                 Intent i_splash = new Intent(SplashPedidoFinalizado.this, MainActivity.class);
                 startActivity(i_splash);
                 finish();
 
             }
-        }, 7000);
+        });
     }
 }
