@@ -1,12 +1,11 @@
 package br.com.marzinhogas.Models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 public class Usuario {
 
     private String nome;
     private String endereco;
+    private String numero;
+    private String bairro;
     private String email;
     private String senha;
     private String confirmarsenha;
@@ -25,6 +24,8 @@ public class Usuario {
         this.confirmarsenha = confirmarsenha;
         this.sexo = sexo;
         this.token = token;
+        this.numero = numero;
+        this.bairro = bairro;
     }
 
     public String getNome() {
@@ -81,5 +82,21 @@ public class Usuario {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 }

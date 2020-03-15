@@ -30,6 +30,7 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
 
                 Intent i_splash = new Intent(SplashPedidoFinalizado.this, MainActivity.class);
                 startActivity(i_splash);
+                i_splash.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
 
             }

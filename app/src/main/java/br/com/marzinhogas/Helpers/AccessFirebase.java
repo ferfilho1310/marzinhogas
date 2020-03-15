@@ -18,14 +18,19 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import br.com.marzinhogas.Controlers.EntrarUser;
 import br.com.marzinhogas.Controlers.MainActivity;
+import br.com.marzinhogas.Models.Entregadores;
 import br.com.marzinhogas.Models.Notification;
+import br.com.marzinhogas.Models.Pedido;
+import br.com.marzinhogas.Models.Usuario;
 
 public class AccessFirebase implements IAccessFirebase {
 
@@ -41,7 +46,7 @@ public class AccessFirebase implements IAccessFirebase {
 
     ProgressDialog progressDialog;
 
-    private AccessFirebase(){
+    private AccessFirebase() {
     }
 
     public static synchronized AccessFirebase getInstance() {
@@ -58,96 +63,179 @@ public class AccessFirebase implements IAccessFirebase {
     }
 
     @Override
-    public void pedidos(String id_user, String nome, String endereco, String data,
-                        String produto, int quantidade_gas, int quantidade_agua,
-                        String horario, Boolean entregue) {
+    public void pedidos(Pedido pedido) {
 
         Map<String, Object> map = new HashMap<>();
 
-        map.put("id_user", id_user);
-        map.put("nome", nome);
-        map.put("endereco", endereco);
-        map.put("data", data);
-        map.put("produto", produto);
-        map.put("quantidade_gas", quantidade_gas);
-        map.put("quantidade_agua", quantidade_agua);
-        map.put("horario", horario);
-        map.put("entregue", entregue);
+        map.put("id_user", pedido.getUser_id_pedido());
+        map.put("nome", pedido.getNome());
+        map.put("endereco", pedido.getEndereco());
+        map.put("bairro", pedido.getBairro());
+        map.put("numero", pedido.getNumero());
+        map.put("data", pedido.getData());
+        map.put("produto", pedido.getProduto());
+        map.put("quantidade_gas", pedido.getQuantidade_gas());
+        map.put("quantidade_agua", pedido.getQuantidade_agua());
+        map.put("horario", pedido.getHorario());
+        map.put("entregue", pedido.getEntregue());
 
         db_pedido.add(map);
     }
 
     @Override
-    public void pedidos_temporarios(String id_user, String nome, String endereco, String data, String produto,
-                                    int quantidade_gas, int quantidade_agua, String horario, Boolean entregue) {
+    public void pedidos_temporarios(Pedido pedido) {
 
         Map<String, Object> map = new HashMap<>();
 
-        map.put("id_user", id_user);
-        map.put("nome", nome);
-        map.put("endereco", endereco);
-        map.put("data", data);
-        map.put("produto", produto);
-        map.put("quantidade_gas", quantidade_gas);
-        map.put("quantidade_agua", quantidade_agua);
-        map.put("horario", horario);
-        map.put("entregue", entregue);
+        map.put("id_user", pedido.getUser_id_pedido());
+        map.put("nome", pedido.getNome());
+        map.put("endereco", pedido.getEndereco());
+        map.put("bairro", pedido.getBairro());
+        map.put("numero", pedido.getNumero());
+        map.put("data", pedido.getData());
+        map.put("produto", pedido.getProduto());
+        map.put("quantidade_gas", pedido.getQuantidade_gas());
+        map.put("quantidade_agua", pedido.getQuantidade_agua());
+        map.put("horario", pedido.getHorario());
+        map.put("entregue", pedido.getEntregue());
 
         db_pedido_temp.add(map);
     }
 
     @Override
-    public void pedidos_permanentes(String id_user, String nome, String endereco, String data, String produto,
-                                    int quantidade_gas, int quantidade_agua, String horario, Boolean entregue) {
+    public void pedidos_permanentes(Pedido pedido) {
 
         Map<String, Object> map = new HashMap<>();
 
-        map.put("id_user", id_user);
-        map.put("nome", nome);
-        map.put("endereco", endereco);
-        map.put("data", data);
-        map.put("produto", produto);
-        map.put("quantidade_gas", quantidade_gas);
-        map.put("quantidade_agua", quantidade_agua);
-        map.put("horario", horario);
-        map.put("entregue", entregue);
+        map.put("id_user", pedido.getUser_id_pedido());
+        map.put("nome", pedido.getNome());
+        map.put("endereco", pedido.getEndereco());
+        map.put("bairro", pedido.getBairro());
+        map.put("numero", pedido.getNumero());
+        map.put("data", pedido.getData());
+        map.put("produto", pedido.getProduto());
+        map.put("quantidade_gas", pedido.getQuantidade_gas());
+        map.put("quantidade_agua", pedido.getQuantidade_agua());
+        map.put("horario", pedido.getHorario());
+        map.put("entregue", pedido.getEntregue());
 
         db_pedido_permanente.add(map);
     }
 
     @Override
-    public void cadastrar_user(final String nome, final String endereco, final String email, final String senha,
-                               final String senhaconfir, final String sexo, final String token, final Activity activity) {
+    public void BuscaUser(final Pedido pedido, String id_user_logado) {
+
+        FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        String recuperar_endereco = "";
+                        String recuperar_nome = "";
+                        String recuperar_bairro = "";
+                        String recuperar_numero = "";
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
+
+                            recuperar_endereco = usuario_banco.getEndereco();
+                            recuperar_nome = usuario_banco.getNome();
+                            recuperar_bairro = usuario_banco.getBairro();
+                            recuperar_numero = usuario_banco.getNumero();
+
+                        }
+
+                        pedido.setEndereco(recuperar_endereco);
+                        pedido.setNome(recuperar_nome);
+                        pedido.setBairro(recuperar_bairro);
+                        pedido.setNumero(recuperar_numero);
+                    }
+                });
+    }
+
+    @Override
+    public void buscarentregadores() {
+
+        FirebaseFirestore.getInstance().collection("Entregadores")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        String token_entregador;
+                        String id_entregador;
+
+                        List<String> ls_token_entregador = new ArrayList<>();
+                        List<String> ls_id_entregador = new ArrayList<>();
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)) {
+
+                            token_entregador = entregadores.getToken();
+                            id_entregador = entregadores.getId_user();
+
+                            ls_token_entregador.add(token_entregador);
+                            ls_id_entregador.add(id_entregador);
+                        }
+
+                        for (int i = 0; i < ls_token_entregador.size(); i++) {
+
+                            new Entregadores().setToken(ls_token_entregador.get(i));
+                            new Entregadores().setId_user(ls_id_entregador.get(i));
+                            new Notification().setBody_pedido("Acesse o app para verificar.");
+                            new Notification().setId_cliente(new Entregadores().getId_user());
+
+                            notificacoes(new Entregadores().getToken(), new Notification());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void cadastrar_user(final Usuario usuario, final Activity activity) {
 
         FirebaseApp.initializeApp(activity);
 
-        if (TextUtils.isEmpty(nome)) {
+        if (TextUtils.isEmpty(usuario.getNome())) {
             Toast.makeText(activity, "Digite seu nome", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(usuario.getEmail())) {
             Toast.makeText(activity, "Informe um e-mail.", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (TextUtils.isEmpty(senha)) {
+        if (TextUtils.isEmpty(usuario.getBairro())) {
+            Toast.makeText(activity, "Informe o bairro", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(usuario.getNumero())) {
+            Toast.makeText(activity, "Informe o numero", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(usuario.getSenha())) {
             Toast.makeText(activity, "Informe uma senha.", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (TextUtils.isEmpty(senhaconfir)) {
+        if (TextUtils.isEmpty(usuario.getConfirmarsenha())) {
             Toast.makeText(activity, "Confirme a senha", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (senha.equals(senhaconfir)) {
+        if (usuario.getSenha().equals(usuario.getConfirmarsenha())) {
 
             progressDialog = new ProgressDialog(activity);
             progressDialog.setMessage("Cadastrando...");
             progressDialog.show();
 
-            firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+            firebaseAuth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -156,13 +244,15 @@ public class AccessFirebase implements IAccessFirebase {
                         Map<String, String> map = new HashMap<>();
 
                         map.put("id_user", firebaseAuth.getUid());
-                        map.put("nome", nome);
-                        map.put("endereco", endereco);
-                        map.put("email", email);
-                        map.put("senha", senha);
-                        map.put("confirmarsenha", senhaconfir);
-                        map.put("sexo", sexo);
-                        map.put("token", token);
+                        map.put("nome", usuario.getNome());
+                        map.put("endereco", usuario.getEndereco());
+                        map.put("email", usuario.getEmail());
+                        map.put("senha", usuario.getSenha());
+                        map.put("bairro", usuario.getNumero());
+                        map.put("numero", usuario.getBairro());
+                        map.put("confirmarsenha", usuario.getConfirmarsenha());
+                        map.put("sexo", usuario.getSexo());
+                        map.put("token", usuario.getToken());
 
                         Intent intent = new Intent(activity, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -2,29 +2,23 @@ package br.com.marzinhogas.Helpers;
 
 import android.app.Activity;
 
-import java.util.List;
-import java.util.Map;
-
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QuerySnapshot;
 import br.com.marzinhogas.Models.Notification;
+import br.com.marzinhogas.Models.Pedido;
+import br.com.marzinhogas.Models.Usuario;
 
 public interface IAccessFirebase {
 
     void notificacoes(String user_token, Notification notification);
 
-    void pedidos(String id_user, String nome, String endereco, String data,
-                 String produto, int quantidade_gas, int quantidade_agua,
-                 String horario, Boolean entregue);
+    void pedidos(Pedido pedido);
 
-    void pedidos_temporarios(String id_user, String nome, String endereco, String data,
-                             String produto, int quantidade_gas, int quantidade_agua,
-                             String horario, Boolean entregue);
+    void pedidos_temporarios(Pedido pedido);
 
-    void pedidos_permanentes(String id_user, String nome, String endereco, String data,
-                             String produto, int quantidade_gas, int quantidade_agua,
-                             String horario, Boolean entregue);
+    void pedidos_permanentes(Pedido pedido);
 
-    void cadastrar_user(final String nome, final String endereco, final String email, final String senha,
-                        final String senhaconfir, final String sexo, final String token, final Activity activity);
+    void cadastrar_user(Usuario pedido, final Activity activity);
 
     void persistir_usuer(Activity activity);
 
@@ -33,5 +27,9 @@ public interface IAccessFirebase {
     void entrar_firebase(final String email, String senha, final Activity activity);
 
     void reset_senha(final String email, final Activity context);
+
+    void buscarentregadores();
+
+    void BuscaUser(Pedido pedido,String id);
 
 }

@@ -1,5 +1,6 @@
-package br.com.marzinhogas.Fragments.fragments_usuario.share;
+package br.com.marzinhogas.Fragments.fragments_usuario.Perfil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.marzinhogas.Controlers.MainActivity;
 import br.com.marzinhogas.Models.Usuario;
 import br.com.marzinhogas.R;
 
-public class ShareFragment extends Fragment {
+public class AlterarDadosPerfil extends Fragment {
 
-    EditText nome_update, endereco_update;
+    EditText nome_update, endereco_update,bairro_update,numero_update;
     Button alterar_dados;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -42,6 +44,8 @@ public class ShareFragment extends Fragment {
 
         nome_update = root.findViewById(R.id.ed_nome_update);
         endereco_update = root.findViewById(R.id.btn_endereço_update);
+        bairro_update = root.findViewById(R.id.ed_bairro_update);
+        numero_update = root.findViewById(R.id.ed_numero_update);
         alterar_dados = root.findViewById(R.id.btn_alterar_dados);
 
         if (firebaseUser != null) {
@@ -54,8 +58,10 @@ public class ShareFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                        String recuperar_endereco;
-                        String recuperar_nome;
+                        String recuperar_endereco = "";
+                        String recuperar_nome = "";
+                        String recuperar_numero = "";
+                        String recuperar_bairro = "";
 
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
 
@@ -63,10 +69,14 @@ public class ShareFragment extends Fragment {
 
                             recuperar_endereco = usuario_banco.getEndereco();
                             recuperar_nome = usuario_banco.getNome();
-
-                            nome_update.setText(recuperar_nome);
-                            endereco_update.setText(recuperar_endereco);
+                            recuperar_bairro = usuario_banco.getBairro();
+                            recuperar_numero = usuario_banco.getNumero();
                         }
+
+                        nome_update.setText(recuperar_nome);
+                        endereco_update.setText(recuperar_endereco);
+                        bairro_update.setText(recuperar_bairro);
+                        numero_update.setText(recuperar_numero);
                     }
                 });
 
@@ -80,6 +90,8 @@ public class ShareFragment extends Fragment {
 
                 map.put("nome", nome_update.getText().toString());
                 map.put("endereco", endereco_update.getText().toString());
+                map.put("bairro",bairro_update.getText().toString());
+                map.put("numero",numero_update.getText().toString());
 
                 if (uid != null) {
 
@@ -87,6 +99,10 @@ public class ShareFragment extends Fragment {
                             .document(uid)
                             .update(map);
                 }
+
+                Intent i_altera_perfil = new Intent(getActivity(), MainActivity.class);
+                startActivity(i_altera_perfil);
+                getActivity().finish();
 
                 Toast.makeText(getActivity(), "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
             }

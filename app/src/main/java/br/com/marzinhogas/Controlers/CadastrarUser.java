@@ -28,7 +28,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class CadastrarUser extends AppCompatActivity {
 
-    EditText nome, endereco, email_cad, senha_cad, confirma_senha;
+    EditText nome, endereco, email_cad, senha_cad, confirma_senha, numero, bairro;
     Button cadatrar_user;
     RadioGroup rg_sexo;
     RadioButton fem, masc;
@@ -54,6 +54,8 @@ public class CadastrarUser extends AppCompatActivity {
         email_cad = findViewById(R.id.ed_email);
         senha_cad = findViewById(R.id.ed_senha);
         confirma_senha = findViewById(R.id.ed_confirmar_senha);
+        numero = findViewById(R.id.ed_numero);
+        bairro = findViewById(R.id.ed_bairro);
         cadatrar_user = findViewById(R.id.btn_cadastrar_user);
         rg_sexo = findViewById(R.id.rg_sexos);
         fem = findViewById(R.id.rd_feminino);
@@ -109,14 +111,12 @@ public class CadastrarUser extends AppCompatActivity {
                 usuario.setEmail(email_cad.getText().toString());
                 usuario.setSenha(senha_cad.getText().toString());
                 usuario.setConfirmarsenha(confirma_senha.getText().toString());
+                usuario.setBairro(bairro.getText().toString());
+                usuario.setNumero(numero.getText().toString());
 
-                AccessFirebase.getInstance().cadastrar_user(usuario.getNome(), usuario.getEndereco(),
-                        usuario.getEmail(), usuario.getSenha(), usuario.getConfirmarsenha(),
-                        usuario.getSexo(), usuario.getToken(), CadastrarUser.this);
-
+                AccessFirebase.getInstance().cadastrar_user(usuario,CadastrarUser.this);
             }
         });
-
     }
 
     @Override

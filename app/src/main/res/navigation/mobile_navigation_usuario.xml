@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="br.com.marzinhogas.Fragments.fragments_usuario.home.HomeFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.Pedir.Pedir"
         android:label="@string/menu_pedir"
         tools:layout="@layout/fragment_pedir" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="br.com.marzinhogas.Fragments.fragments_usuario.gallery.GalleryFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.HistoricoPedidos.Pedidos"
         android:label="@string/menu_pedidos"
         tools:layout="@layout/fragment_registro_pedidos" />
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_share"
-        android:name="br.com.marzinhogas.Fragments.fragments_usuario.share.ShareFragment"
+        android:name="br.com.marzinhogas.Fragments.fragments_usuario.Perfil.AlterarDadosPerfil"
         tools:layout="@layout/fragment_perfil" />
 
     <fragment

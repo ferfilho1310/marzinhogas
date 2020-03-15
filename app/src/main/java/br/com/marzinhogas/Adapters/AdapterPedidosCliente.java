@@ -31,7 +31,7 @@ public class AdapterPedidosCliente extends FirestoreRecyclerAdapter<Pedido, Adap
     @Override
     public PedidosClienteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mostra_dados_pedidos,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mostra_dados_pedidos, parent, false);
 
         return new PedidosClienteHolder(view);
     }
@@ -39,20 +39,21 @@ public class AdapterPedidosCliente extends FirestoreRecyclerAdapter<Pedido, Adap
     @Override
     protected void onBindViewHolder(@NonNull PedidosClienteHolder holder, int position, @NonNull Pedido model) {
 
+        String endereco = model.getEndereco() +", "+ model.getBairro() +", "+ model.getNumero();
+
         holder.nome.setText(model.getNome());
         holder.produtos.setText(model.getProduto());
         holder.qtd_gas.setText(String.valueOf(model.getQuantidade_gas()));
         holder.qtd_agua.setText(String.valueOf(model.getQuantidade_agua()));
         holder.data.setText(model.getData());
-        holder.endereco.setText(model.getEndereco());
+        holder.endereco.setText(endereco);
         holder.horario_pedido.setText(model.getHorario());
 
     }
 
+    public class PedidosClienteHolder extends RecyclerView.ViewHolder {
 
-    public class PedidosClienteHolder extends RecyclerView.ViewHolder{
-
-        TextView nome,produtos,data,qtd_gas,qtd_agua,endereco,horario_pedido;
+        TextView nome, produtos, data, qtd_gas, qtd_agua, endereco, horario_pedido;
 
         public PedidosClienteHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,7 +64,7 @@ public class AdapterPedidosCliente extends FirestoreRecyclerAdapter<Pedido, Adap
             qtd_agua = itemView.findViewById(R.id.txt_qtd_agua);
             qtd_gas = itemView.findViewById(R.id.txt_qtd_gas);
             endereco = itemView.findViewById(R.id.txt_endereco_cliente);
-            horario_pedido =itemView.findViewById(R.id.txt_horario_pedido);
+            horario_pedido = itemView.findViewById(R.id.txt_horario_pedido);
 
         }
     }

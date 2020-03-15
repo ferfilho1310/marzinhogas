@@ -1,6 +1,6 @@
 package br.com.marzinhogas.Models;
 
-public class Notification extends Pedido{
+public class Notification{
 
     private String id_cliente;
     private String body_pedido;

@@ -1,4 +1,4 @@
-package br.com.marzinhogas.Fragments.fragments_usuario.gallery;
+package br.com.marzinhogas.Fragments.fragments_usuario.HistoricoPedidos;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +24,7 @@ import br.com.marzinhogas.Adapters.AdapterViewEmpty;
 import br.com.marzinhogas.Models.Pedido;
 import br.com.marzinhogas.R;
 
-public class GalleryFragment extends Fragment {
+public class Pedidos extends Fragment {
 
     GalleryViewModel galleryViewModel;
 

@@ -1,4 +1,4 @@
-package br.com.marzinhogas.Fragments.fragments_usuario.home;
+package br.com.marzinhogas.Fragments.fragments_usuario.Pedir;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,10 +31,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.Objects;
 
 import br.com.marzinhogas.Controlers.SplashPedidoFinalizado;
 import br.com.marzinhogas.Helpers.AccessFirebase;
@@ -45,7 +43,7 @@ import br.com.marzinhogas.Models.Pedido;
 import br.com.marzinhogas.Models.Usuario;
 import br.com.marzinhogas.R;
 
-public class HomeFragment extends Fragment {
+public class Pedir extends Fragment {
 
     private Spinner sp_produtos;
     private NumberPicker nb_qtd_agua, nb_qtd_gas;
@@ -55,13 +53,8 @@ public class HomeFragment extends Fragment {
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    private FirebaseFirestore db_user = FirebaseFirestore.getInstance();
-    private CollectionReference cl_user = db_user.collection("Users");
-
     private Pedido pedido = new Pedido();
     private Usuario usuario = new Usuario();
-    private Entregadores entregadorestoken = new Entregadores();
-    private Notification notification = new Notification();
 
     LinearLayout lout_agua, lout_gas;
 
@@ -72,7 +65,7 @@ public class HomeFragment extends Fragment {
 
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        View root = inflater.inflate(R.layout.fragment_pedir, container, false);
+        final View root = inflater.inflate(R.layout.fragment_pedir, container, false);
 
         if (firebaseUser != null) {
             id_user_logado = firebaseUser.getUid();
@@ -94,38 +87,17 @@ public class HomeFragment extends Fragment {
         nb_qtd_gas.setMinValue(0);
         nb_qtd_gas.setMaxValue(20);
 
-        FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        String recuperar_endereco;
-                        String recuperar_nome;
-
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
-
-                            recuperar_endereco = usuario_banco.getEndereco();
-                            recuperar_nome = usuario_banco.getNome();
-
-                            pedido.setEndereco(recuperar_endereco);
-                            pedido.setNome(recuperar_nome);
-                        }
-                    }
-                });
-
-        spinner();
-        number_pickers();
+        AccessFirebase.getInstance().BuscaUser(pedido,id_user_logado);
 
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final Dialog dialog = new Dialog(getActivity());
+                final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
 
                 dialog.setContentView(R.layout.dialog_confirma_pedido);
+
+                String endereco = pedido.getEndereco() + ", " + pedido.getBairro() + ", " + pedido.getNumero();
 
                 TextView confirma_nome = dialog.findViewById(R.id.conf_nome);
                 TextView confirma_endereco = dialog.findViewById(R.id.conf_endereco);
@@ -133,7 +105,7 @@ public class HomeFragment extends Fragment {
                 TextView confirma_qts_gas = dialog.findViewById(R.id.conf_qtd_gas);
 
                 confirma_nome.setText(pedido.getNome());
-                confirma_endereco.setText(pedido.getEndereco());
+                confirma_endereco.setText(endereco);
                 confirma_qtd_agua.setText(String.valueOf(pedido.getQuantidade_agua()));
                 confirma_qts_gas.setText(String.valueOf(pedido.getQuantidade_gas()));
 
@@ -148,6 +120,7 @@ public class HomeFragment extends Fragment {
 
                         Intent i_splash = new Intent(getActivity(), SplashPedidoFinalizado.class);
                         startActivity(i_splash);
+                        getActivity().finish();
 
                         dialog.dismiss();
                     }
@@ -160,11 +133,12 @@ public class HomeFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
             }
         });
 
+        spinner();
+        number_pickers();
         updatetoken();
 
         return root;
@@ -187,64 +161,13 @@ public class HomeFragment extends Fragment {
         pedido.setHorario(horario);
         pedido.setEntregue(false);
 
-        FirebaseFirestore.getInstance().collection("Entregadores")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        AccessFirebase.getInstance().buscarentregadores();
 
-                        String token_entregador;
-                        String id_entregador;
+        AccessFirebase.getInstance().pedidos(pedido);
 
-                        List<String> ls_token_entregador = new ArrayList<>();
-                        List<String> ls_id_entregador = new ArrayList<>();
+        AccessFirebase.getInstance().pedidos_permanentes(pedido);
 
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                        for (Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)) {
-
-                            token_entregador = entregadores.getToken();
-                            id_entregador = entregadores.getId_user();
-
-                            ls_token_entregador.add(token_entregador);
-                            ls_id_entregador.add(id_entregador);
-                        }
-
-                        for (int i = 0; i < ls_token_entregador.size(); i++) {
-
-                            entregadorestoken.setToken(ls_token_entregador.get(i));
-                            entregadorestoken.setId_user(ls_id_entregador.get(i));
-                            notification.setBody_pedido("Acesse o app para verificar.");
-                            notification.setId_cliente(entregadorestoken.getId_user());
-
-                            //notification.setUser_id_pedido(pedido.getUser_id_pedido());
-
-                            /*notification.setNome("teste");
-                            notification.setEndereco("teste");
-                            notification.setProduto(pedido.getProduto());
-                            notification.setData(pedido.getData());
-                            notification.setQuantidade_agua(pedido.getQuantidade_agua());
-                            notification.setQuantidade_gas(pedido.getQuantidade_gas());
-                            notification.setHorario(pedido.getHorario());
-                            notification.setEntregue(pedido.getEntregue());
-                            */
-
-                            AccessFirebase.getInstance().notificacoes(entregadorestoken.getToken(), notification);
-                        }
-                    }
-                });
-
-        AccessFirebase.getInstance().pedidos(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
-                pedido.getData(), pedido.getProduto(),
-                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
-
-        AccessFirebase.getInstance().pedidos_permanentes(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
-                pedido.getData(), pedido.getProduto(),
-                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
-
-        AccessFirebase.getInstance().pedidos_temporarios(pedido.getUser_id_pedido(), pedido.getNome(), pedido.getEndereco(),
-                pedido.getData(), pedido.getProduto(),
-                pedido.getQuantidade_gas(), pedido.getQuantidade_agua(), pedido.getHorario(), pedido.getEntregue());
+        AccessFirebase.getInstance().pedidos_temporarios(pedido);
 
     }
 
@@ -326,7 +249,8 @@ public class HomeFragment extends Fragment {
                     pedido.setProduto(nome_produto);
                 }
 
-                if(nome_produto.equals("Selecione")){
+                if (nome_produto.equals("Selecione")) {
+
                     lout_agua.setVisibility(View.GONE);
                     lout_gas.setVisibility(View.GONE);
 
