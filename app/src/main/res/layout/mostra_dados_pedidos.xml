@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/corner_simple"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Textview"
+            android:text="Fernando Antônio da Silva Filho"
             android:textColor="@android:color/white"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -44,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="95dp"
             android:layout_marginTop="12dp"
             android:layout_toEndOf="@id/nome_cliente"
             android:text="Endereço"
@@ -59,7 +60,7 @@
             android:layout_marginStart="35dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@id/txt_nome_do_pedido"
-            android:text="TextView"
+            android:text="Rua Caetés, 103, Centro"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -80,11 +81,11 @@
             android:id="@+id/txt_produto_pedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_below="@id/produto_cliente"
             android:layout_marginStart="70dp"
+            android:layout_marginTop="8dp"
             android:layout_toEndOf="@id/endereco_cliente"
-            android:text="Textview"
+            android:text="Água e Gás"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -92,8 +93,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="@color/background"
+        android:layout_height="110dp"
+        android:background="@android:color/white"
         android:orientation="horizontal">
 
         <TextView
@@ -102,7 +103,7 @@
             android:layout_height="37dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="9dp"
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="@string/quantidade_de_gas"
@@ -114,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/qtd_gas"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="0"
@@ -123,10 +124,10 @@
         <TextView
             android:id="@+id/qtd_agua"
             android:layout_width="80dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="12dp"
             android:layout_height="39dp"
-            android:layout_marginStart="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
             android:layout_toEndOf="@id/qtd_gas"
             android:gravity="center"
             android:text="@string/quantidade_de_gua"
@@ -148,12 +149,12 @@
             android:id="@+id/data_pedido"
             android:layout_width="58dp"
             android:layout_height="40dp"
-            android:layout_toEndOf="@id/qtd_agua"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
-            android:layout_marginStart="20dp"
-            android:text="Data do pedido"
+            android:layout_toEndOf="@id/qtd_agua"
             android:gravity="center"
+            android:text="Data do pedido"
             android:textColor="@android:color/black" />
 
         <TextView
@@ -164,7 +165,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/txt_qtd_agua"
-            android:text="Textview"
+            android:text="26/03/2020"
             android:textColor="@android:color/black" />
 
         <TextView
@@ -172,11 +173,10 @@
             android:layout_width="69dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
-            android:layout_alignParentEnd="true"
             android:layout_toEndOf="@id/data_pedido"
-            android:gravity="center"
             android:text="Horário do pedido"
             android:textColor="@android:color/black" />
 
@@ -189,9 +189,8 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/txt_data_pedido"
-            android:text="Textview"
+            android:text="20:33:55"
             android:textColor="@android:color/black" />
 
     </RelativeLayout>
-
 </LinearLayout>

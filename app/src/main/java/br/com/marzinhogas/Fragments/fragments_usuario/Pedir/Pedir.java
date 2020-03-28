@@ -1,6 +1,7 @@
 package br.com.marzinhogas.Fragments.fragments_usuario.Pedir;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,11 +34,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
+import br.com.marzinhogas.Controlers.MainActivity;
 import br.com.marzinhogas.Controlers.SplashPedidoFinalizado;
 import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Entregadores;
@@ -61,15 +67,16 @@ public class Pedir extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        FirebaseApp.initializeApp(getActivity());
-
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
         final View root = inflater.inflate(R.layout.fragment_pedir, container, false);
+
+        FirebaseApp.initializeApp(getActivity());
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
             id_user_logado = firebaseUser.getUid();
         }
+
+        AccessFirebase.getInstance().BuscaUser(pedido, id_user_logado);
 
         sp_produtos = root.findViewById(R.id.spinner);
         nb_qtd_agua = root.findViewById(R.id.nb_qtd_agua);
@@ -87,53 +94,87 @@ public class Pedir extends Fragment {
         nb_qtd_gas.setMinValue(0);
         nb_qtd_gas.setMaxValue(20);
 
-        AccessFirebase.getInstance().BuscaUser(pedido,id_user_logado);
-
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
+                if (AccessFirebase.getInstance().isOnline(getActivity())) {
 
-                dialog.setContentView(R.layout.dialog_confirma_pedido);
+                    final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
 
-                String endereco = pedido.getEndereco() + ", " + pedido.getBairro() + ", " + pedido.getNumero();
+                    dialog.setContentView(R.layout.dialog_confirma_pedido);
 
-                TextView confirma_nome = dialog.findViewById(R.id.conf_nome);
-                TextView confirma_endereco = dialog.findViewById(R.id.conf_endereco);
-                TextView confirma_qtd_agua = dialog.findViewById(R.id.conf_qtd_agua);
-                TextView confirma_qts_gas = dialog.findViewById(R.id.conf_qtd_gas);
+                    String endereco = pedido.getEndereco() + ", " + pedido.getBairro() + ", " + pedido.getNumero();
 
-                confirma_nome.setText(pedido.getNome());
-                confirma_endereco.setText(endereco);
-                confirma_qtd_agua.setText(String.valueOf(pedido.getQuantidade_agua()));
-                confirma_qts_gas.setText(String.valueOf(pedido.getQuantidade_gas()));
+                    TextView confirma_nome = dialog.findViewById(R.id.conf_nome);
+                    TextView confirma_endereco = dialog.findViewById(R.id.conf_endereco);
+                    TextView confirma_qtd_agua = dialog.findViewById(R.id.conf_qtd_agua);
+                    TextView confirma_qts_gas = dialog.findViewById(R.id.conf_qtd_gas);
 
-                Button ok = dialog.findViewById(R.id.btn_OK);
-                Button cancelar = dialog.findViewById(R.id.btn_cancelar);
+                    confirma_nome.setText(pedido.getNome());
+                    confirma_endereco.setText(endereco);
+                    confirma_qtd_agua.setText(String.valueOf(pedido.getQuantidade_agua()));
+                    confirma_qts_gas.setText(String.valueOf(pedido.getQuantidade_gas()));
 
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                    Button ok = dialog.findViewById(R.id.btn_OK);
+                    Button cancelar = dialog.findViewById(R.id.btn_cancelar);
 
-                        picktokenentregador();
+                    if(pedido.getQuantidade_gas() == 0 && pedido.getQuantidade_agua() == 0){
+                        final Snackbar snackbar = Snackbar.make(getView(),"Informe um produto",Snackbar.LENGTH_INDEFINITE);
+                        snackbar.show();
+                        snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimary));
+                        snackbar.setActionTextColor(getResources().getColor(android.R.color.white));
+                        snackbar.setAction("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                        Intent i_splash = new Intent(getActivity(), SplashPedidoFinalizado.class);
-                        startActivity(i_splash);
-                        getActivity().finish();
-
-                        dialog.dismiss();
+                                snackbar.dismiss();
+                            }
+                        });
+                        return;
                     }
-                });
 
-                cancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
+                            picktokenentregador();
+
+                            Intent i_splash = new Intent(getActivity(), SplashPedidoFinalizado.class);
+                            startActivity(i_splash);
+                            getActivity().finish();
+
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                    cancelar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+
+                } else {
+                    final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
+
+                    dialog.setContentView(R.layout.sem_internet);
+
+                    Button fab_fechar_internet_dialog = dialog.findViewById(R.id.btn_close_internet_dialog);
+
+                    fab_fechar_internet_dialog.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.show();
+                }
             }
         });
 

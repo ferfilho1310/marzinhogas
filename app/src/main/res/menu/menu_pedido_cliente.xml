@@ -9,10 +9,4 @@
         app:showAsAction="always"
         android:title="@string/sair"/>
 
-    <item
-        android:id="@+id/config"
-        android:orderInCategory="2"
-        app:showAsAction="never"
-        android:title="@string/configura_es"/>
-
 </menu>

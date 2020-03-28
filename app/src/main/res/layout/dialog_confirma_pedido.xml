@@ -2,99 +2,136 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
+    android:background="@android:color/white"
     android:gravity="center"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dados do pedido"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/conf_nome"
-        android:layout_marginTop="24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="Nome" />
-
-    <TextView
-        android:id="@+id/conf_endereco"
-        android:layout_marginTop="8dp"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Endereço" />
-
-    <TextView
-        android:textSize="15sp"
-        android:id="@+id/conf_produto_agua"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantidade de água: "
-        android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:textSize="15sp"
-        android:id="@+id/conf_qtd_agua"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"/>
-
-    <TextView
-        android:layout_marginTop="8dp"
-        android:id="@+id/conf_produto_gas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantidade de gás: "
-        android:textSize="15sp"/>
-
-    <TextView
-        android:textSize="15sp"
-        android:id="@+id/conf_qtd_gas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Dados do pedido"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Podemos confirmar seu pedido?"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/btn_OK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-40dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/corner_color"
-        android:text="Sim"
-        android:textColor="@android:color/white" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/btn_cancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="-48dp"
-        android:background="@drawable/corner_color"
-        android:text="Não"
-        android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/conf_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Nome"
+                android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/conf_endereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Endereço"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/conf_produto_agua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Quantidade de água: "
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/conf_qtd_agua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/conf_produto_gas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Quantidade de gás: "
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/conf_qtd_gas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Podemos confirmar seu pedido?"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_OK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/corner_color"
+            android:padding="12dp"
+            android:text="Sim"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:padding="12dp"
+            android:background="@drawable/corner_color"
+            android:text="Não"
+            android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

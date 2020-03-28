@@ -35,18 +35,14 @@
     <string name="pedir">Pedir</string>
     <string name="sair">Sair</string>
     <string name="configura_es">Configurações</string>
+    <string name="alterar_dados">Alterar de dados</string>
+    <string name="msg_pedido_user">Todos os pedidos realizados serão registrados aqui.   Faça seu primeiro pedido ;)</string>
 
     <string-array name="sp_produtos">
-
         <item>Selecione</item>
-
         <item>Água</item>
-
         <item>Gás</item>
-
         <item>Água e Gás</item>
 
     </string-array>
-
-
 </resources>

@@ -32,4 +32,6 @@ public interface IAccessFirebase {
 
     void BuscaUser(Pedido pedido,String id);
 
+    boolean isOnline(Activity activity);
+
 }

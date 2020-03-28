@@ -2,7 +2,10 @@ package br.com.marzinhogas.Helpers;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -172,23 +175,28 @@ public class AccessFirebase implements IAccessFirebase {
 
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
 
-                        for (Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)) {
+                        if (queryDocumentSnapshots != null) {
+                            for (Entregadores entregadores : queryDocumentSnapshots.toObjects(Entregadores.class)) {
 
-                            token_entregador = entregadores.getToken();
-                            id_entregador = entregadores.getId_user();
+                                token_entregador = entregadores.getToken();
+                                id_entregador = entregadores.getId_user();
 
-                            ls_token_entregador.add(token_entregador);
-                            ls_id_entregador.add(id_entregador);
+                                ls_token_entregador.add(token_entregador);
+                                ls_id_entregador.add(id_entregador);
+                            }
                         }
 
                         for (int i = 0; i < ls_token_entregador.size(); i++) {
 
-                            new Entregadores().setToken(ls_token_entregador.get(i));
-                            new Entregadores().setId_user(ls_id_entregador.get(i));
-                            new Notification().setBody_pedido("Acesse o app para verificar.");
-                            new Notification().setId_cliente(new Entregadores().getId_user());
+                            Notification notification = new Notification();
+                            Entregadores entregadores = new Entregadores();
 
-                            notificacoes(new Entregadores().getToken(), new Notification());
+                            entregadores.setToken(ls_token_entregador.get(i));
+                            entregadores.setId_user(ls_id_entregador.get(i));
+                            notification.setBody_pedido("Acesse o app para verificar.");
+                            notification.setId_cliente(entregadores.getId_user());
+
+                            AccessFirebase.getInstance().notificacoes(entregadores.getToken(), notification);
                         }
                     }
                 });
@@ -282,7 +290,7 @@ public class AccessFirebase implements IAccessFirebase {
 
                         } catch (Exception e) {
 
-                            Toast.makeText(activity, "Ops!Erro a cadastrar o usuário", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Ops!Erro a cadastrar o usuário" + e, Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     }
@@ -346,8 +354,8 @@ public class AccessFirebase implements IAccessFirebase {
                     if (task.isSuccessful()) {
 
                         Intent i_entrar_prof = new Intent(activity, MainActivity.class);
-                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(i_entrar_prof);
+                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.finish();
 
                         Toast.makeText(activity, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
@@ -398,4 +406,16 @@ public class AccessFirebase implements IAccessFirebase {
         });
     }
 
+    @Override
+    public boolean isOnline(Activity activity) {
+
+        ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
