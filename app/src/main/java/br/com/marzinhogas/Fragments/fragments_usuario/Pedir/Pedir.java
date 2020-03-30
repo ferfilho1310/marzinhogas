@@ -43,6 +43,7 @@ import java.util.Objects;
 import br.com.marzinhogas.Controlers.MainActivity;
 import br.com.marzinhogas.Controlers.SplashPedidoFinalizado;
 import br.com.marzinhogas.Helpers.AccessFirebase;
+import br.com.marzinhogas.Helpers.AccessResources;
 import br.com.marzinhogas.Models.Entregadores;
 import br.com.marzinhogas.Models.Notification;
 import br.com.marzinhogas.Models.Pedido;
@@ -120,6 +121,7 @@ public class Pedir extends Fragment {
                     Button cancelar = dialog.findViewById(R.id.btn_cancelar);
 
                     if(pedido.getQuantidade_gas() == 0 && pedido.getQuantidade_agua() == 0){
+
                         final Snackbar snackbar = Snackbar.make(getView(),"Informe um produto",Snackbar.LENGTH_INDEFINITE);
                         snackbar.show();
                         snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimary));
@@ -304,4 +306,5 @@ public class Pedir extends Fragment {
             }
         });
     }
+
 }
