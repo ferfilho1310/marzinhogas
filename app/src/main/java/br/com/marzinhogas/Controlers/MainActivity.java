@@ -1,5 +1,6 @@
 package br.com.marzinhogas.Controlers;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,7 +26,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -40,6 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +53,7 @@ import java.util.Date;
 
 import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Pedido;
+import br.com.marzinhogas.Models.PrecoProdutos;
 import br.com.marzinhogas.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                  AccessFirebase.getInstance().sign_out_firebase(MainActivity.this);
+                    AccessFirebase.getInstance().sign_out_firebase(MainActivity.this);
 
                 }
             }).setNegativeButton("Cancelar", null);
@@ -105,8 +112,40 @@ public class MainActivity extends AppCompatActivity {
 
             drawer.openDrawer(Gravity.LEFT);
 
-        }
+        } else if (id == R.id.tabela_preco) {
 
+            final Dialog dialog_tabela = new Dialog(MainActivity.this);
+
+            dialog_tabela.setContentView(R.layout.dialog_tabela_de_preco);
+
+            final TextView tabela_agua = dialog_tabela.findViewById(R.id.txt_preco_agua);
+            final TextView tabela_gas = dialog_tabela.findViewById(R.id.txt_preco_gas);
+            Button fechar_tabela = dialog_tabela.findViewById(R.id.btn_fechar_tabela);
+
+            FirebaseFirestore.getInstance().collection("Tabeladepreco").document("precos").addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                    if (documentSnapshot != null) {
+                        PrecoProdutos precoProdutos = new PrecoProdutos();
+
+                        precoProdutos.setPreco_agua(String.valueOf(documentSnapshot.get("precoagua")));
+                        precoProdutos.setPreco_gas(String.valueOf(documentSnapshot.get("precogas")));
+
+                        tabela_agua.setText(precoProdutos.getPreco_agua());
+                        tabela_gas.setText(precoProdutos.getPreco_gas());
+                    }
+                }
+            });
+
+            fechar_tabela.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog_tabela.dismiss();
+                }
+            });
+            dialog_tabela.show();
+        }
         return true;
     }
 

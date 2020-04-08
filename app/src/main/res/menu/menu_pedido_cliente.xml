@@ -2,11 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/tabela_preco"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:title="Tabela de preço"/>
+
     <item
         android:id="@+id/sair"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         android:icon="@drawable/ic_exit"
         app:showAsAction="always"
         android:title="@string/sair"/>
+
 
 </menu>
