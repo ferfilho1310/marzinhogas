@@ -144,6 +144,7 @@ public class Pedir extends Fragment {
 
                             Intent i_splash = new Intent(getActivity(), SplashPedidoFinalizado.class);
                             startActivity(i_splash);
+                            i_splash.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             getActivity().finish();
 
                             dialog.dismiss();

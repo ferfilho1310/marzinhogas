@@ -23,6 +23,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -139,21 +141,23 @@ public class AccessFirebase implements IAccessFirebase {
                         String recuperar_bairro = "";
                         String recuperar_numero = "";
 
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+                        if (task.isSuccessful()) {
+                            QuerySnapshot queryDocumentSnapshots = task.getResult();
 
-                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
+                            for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
 
-                            recuperar_endereco = usuario_banco.getEndereco();
-                            recuperar_nome = usuario_banco.getNome();
-                            recuperar_bairro = usuario_banco.getBairro();
-                            recuperar_numero = usuario_banco.getNumero();
+                                recuperar_endereco = usuario_banco.getEndereco();
+                                recuperar_nome = usuario_banco.getNome();
+                                recuperar_bairro = usuario_banco.getBairro();
+                                recuperar_numero = usuario_banco.getNumero();
 
+                            }
+
+                            pedido.setEndereco(recuperar_endereco);
+                            pedido.setNome(recuperar_nome);
+                            pedido.setBairro(recuperar_bairro);
+                            pedido.setNumero(recuperar_numero);
                         }
-
-                        pedido.setEndereco(recuperar_endereco);
-                        pedido.setNome(recuperar_nome);
-                        pedido.setBairro(recuperar_bairro);
-                        pedido.setNumero(recuperar_numero);
                     }
                 });
     }
@@ -255,16 +259,17 @@ public class AccessFirebase implements IAccessFirebase {
                         map.put("nome", usuario.getNome());
                         map.put("endereco", usuario.getEndereco());
                         map.put("email", usuario.getEmail());
-                        map.put("senha", usuario.getSenha());
-                        map.put("bairro", usuario.getNumero());
-                        map.put("numero", usuario.getBairro());
-                        map.put("confirmarsenha", usuario.getConfirmarsenha());
+                        map.put("senha", AccessResources.getInstance().criptografiadesenha(usuario.getNome(), usuario.getSenha()));
+                        map.put("bairro", usuario.getBairro());
+                        map.put("numero", usuario.getNumero());
+                        map.put("confirmarsenha", AccessResources.getInstance().criptografiadesenha(usuario.getNome(), usuario.getConfirmarsenha()));
                         map.put("sexo", usuario.getSexo());
                         map.put("token", usuario.getToken());
 
                         Intent intent = new Intent(activity, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(intent);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.finish();
 
                         db_users.document(firebaseAuth.getUid()).set(map);
 

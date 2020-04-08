@@ -8,10 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@color/colorPrimary"
         android:gravity="center"
-        android:background="@color/colorPrimary">
+        android:padding="25dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +20,7 @@
             android:gravity="center"
             android:text="Dados do pedido"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -27,15 +28,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/conf_nome"
@@ -66,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/conf_produto_gas"
@@ -88,20 +89,21 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"/>
+            android:layout_marginEnd="12dp"
+            android:background="@android:color/darker_gray" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="20sp"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:padding="8dp"
             android:text="Podemos confirmar seu pedido?"
             android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -109,28 +111,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="8dp">
+            android:padding="4dp">
 
-        <Button
-            android:id="@+id/btn_OK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="100dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/corner_color"
-            android:padding="12dp"
-            android:text="Sim"
-            android:textColor="@android:color/white" />
+            <Button
+                android:id="@+id/btn_OK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/corner_color"
+                android:minWidth="100dp"
+                android:padding="12dp"
+                android:text="Sim"
+                android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/btn_cancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="100dp"
-            android:padding="12dp"
-            android:background="@drawable/corner_color"
-            android:text="Não"
-            android:textColor="@android:color/white" />
+            <Button
+                android:id="@+id/btn_cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_color"
+                android:minWidth="100dp"
+                android:padding="12dp"
+                android:text="Não"
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
     </LinearLayout>
