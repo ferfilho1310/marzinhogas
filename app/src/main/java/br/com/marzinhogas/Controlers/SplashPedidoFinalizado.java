@@ -6,20 +6,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
-import com.google.android.gms.ads.RequestConfiguration;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Arrays;
-
-import br.com.marzinhogas.Helpers.AccessResources;
 import br.com.marzinhogas.R;
 
 public class SplashPedidoFinalizado extends AppCompatActivity {
 
     FloatingActionButton finalizar;
+    InterstitialAd interstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +27,8 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
 
         finalizar = findViewById(R.id.btn_finalizar);
 
-        new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList(("B6D5B7288C97DD6A90A5F0E267BADDA5")));
+        ads();
 
-        AccessResources.getInstance().Ads(this);
         Handler hd_splahs = new Handler();
         hd_splahs.postDelayed(new Runnable() {
             @Override
@@ -52,15 +50,32 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        AccessResources.getInstance().Ads(SplashPedidoFinalizado.this);
+    private void ads() {
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        AdRequest adIRequest = new AdRequest.Builder().build();
+
+        // Prepare the Interstitial Ad Activity
+        interstitial = new InterstitialAd(SplashPedidoFinalizado.this);
+
+        // Insert the Ad Unit ID
+        interstitial.setAdUnitId("ca-app-pub-3940256099942544/5224354917");
+
+        // Interstitial Ad load Request
+        interstitial.loadAd(adIRequest);
+
+        // Prepare an Interstitial Ad Listener
+        interstitial.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                // Call displayInterstitial() function when the Ad loads
+                displayInterstitial();
+            }
+        });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        AccessResources.getInstance().Ads(SplashPedidoFinalizado.this);
+    public void displayInterstitial() {
+        // If Interstitial Ads are loaded then show else show nothing.
+        if (interstitial.isLoaded()) {
+            interstitial.show();
+        }
     }
 }

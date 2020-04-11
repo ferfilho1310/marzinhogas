@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -421,6 +422,64 @@ public class AccessFirebase implements IAccessFirebase {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void lerdadosusuario(final EditText ed_nome, final EditText ed_endereco, final EditText ed_numero, final EditText ed_bairro, String id_user_logado) {
+
+        FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        String recuperar_endereco = "";
+                        String recuperar_nome = "";
+                        String recuperar_numero = "";
+                        String recuperar_bairro = "";
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
+
+                            recuperar_endereco = usuario_banco.getEndereco();
+                            recuperar_nome = usuario_banco.getNome();
+                            recuperar_bairro = usuario_banco.getBairro();
+                            recuperar_numero = usuario_banco.getNumero();
+                        }
+
+                        ed_nome.setText(recuperar_nome);
+                        ed_endereco.setText(recuperar_endereco);
+                        ed_bairro.setText(recuperar_bairro);
+                        ed_numero.setText(recuperar_numero);
+                    }
+                });
+    }
+
+    @Override
+    public void alterardadosuser(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, FirebaseAuth auth, Activity context) {
+
+        String uid = auth.getUid();
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("nome", ed_nome.getText().toString());
+        map.put("endereco", ed_endereco.getText().toString());
+        map.put("bairro", ed_bairro.getText().toString());
+        map.put("numero", ed_numero.getText().toString());
+
+        if (uid != null) {
+
+            FirebaseFirestore.getInstance().collection("Users")
+                    .document(uid)
+                    .update(map);
+        }
+
+        Intent i_altera_perfil = new Intent(context, MainActivity.class);
+        context.startActivity(i_altera_perfil);
+        context.finish();
+
+        Toast.makeText(context, "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
 
     }
 }

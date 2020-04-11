@@ -25,13 +25,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.marzinhogas.Controlers.MainActivity;
+import br.com.marzinhogas.Helpers.AccessFirebase;
 import br.com.marzinhogas.Models.Usuario;
 import br.com.marzinhogas.R;
 
 public class AlterarDadosPerfil extends Fragment {
 
-    EditText nome_update, endereco_update, bairro_update, numero_update;
-    Button alterar_dados;
+    private EditText nome_update, endereco_update, bairro_update, numero_update;
+    private Button alterar_dados;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -54,33 +55,7 @@ public class AlterarDadosPerfil extends Fragment {
             id_user_logado = firebaseUser.getUid();
         }
 
-        FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        String recuperar_endereco = "";
-                        String recuperar_nome = "";
-                        String recuperar_numero = "";
-                        String recuperar_bairro = "";
-
-                        QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                        for (Usuario usuario_banco : queryDocumentSnapshots.toObjects(Usuario.class)) {
-
-                            recuperar_endereco = usuario_banco.getEndereco();
-                            recuperar_nome = usuario_banco.getNome();
-                            recuperar_bairro = usuario_banco.getBairro();
-                            recuperar_numero = usuario_banco.getNumero();
-                        }
-
-                        nome_update.setText(recuperar_nome);
-                        endereco_update.setText(recuperar_endereco);
-                        bairro_update.setText(recuperar_bairro);
-                        numero_update.setText(recuperar_numero);
-                    }
-                });
+        AccessFirebase.getInstance().lerdadosusuario(nome_update, endereco_update, numero_update, bairro_update, id_user_logado);
 
         alterar_dados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,27 +68,8 @@ public class AlterarDadosPerfil extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                String uid = auth.getUid();
-
-                                Map<String, Object> map = new HashMap<>();
-
-                                map.put("nome", nome_update.getText().toString());
-                                map.put("endereco", endereco_update.getText().toString());
-                                map.put("bairro", bairro_update.getText().toString());
-                                map.put("numero", numero_update.getText().toString());
-
-                                if (uid != null) {
-
-                                    FirebaseFirestore.getInstance().collection("Users")
-                                            .document(uid)
-                                            .update(map);
-                                }
-
-                                Intent i_altera_perfil = new Intent(getActivity(), MainActivity.class);
-                                startActivity(i_altera_perfil);
-                                getActivity().finish();
-
-                                Toast.makeText(getActivity(), "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
+                                AccessFirebase.getInstance().alterardadosuser(nome_update, endereco_update, numero_update,
+                                        bairro_update, auth, getActivity());
 
                             }
                         }).setNegativeButton("Cancelar", null).show();

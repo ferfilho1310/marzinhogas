@@ -63,14 +63,14 @@ public class Pedir extends Fragment {
     private Pedido pedido = new Pedido();
     private Usuario usuario = new Usuario();
 
-    LinearLayout lout_agua, lout_gas;
+    private LinearLayout lout_agua, lout_gas;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.fragment_pedir, container, false);
 
-        FirebaseApp.initializeApp(getActivity());
+        FirebaseApp.initializeApp(Objects.requireNonNull(getActivity()));
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
@@ -99,7 +99,7 @@ public class Pedir extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (AccessFirebase.getInstance().isOnline(getActivity())) {
+                if (AccessFirebase.getInstance().isOnline(Objects.requireNonNull(getActivity()))) {
 
                     final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
 
@@ -122,7 +122,7 @@ public class Pedir extends Fragment {
 
                     if(pedido.getQuantidade_gas() == 0 && pedido.getQuantidade_agua() == 0){
 
-                        final Snackbar snackbar = Snackbar.make(getView(),"Informe um produto",Snackbar.LENGTH_INDEFINITE);
+                        final Snackbar snackbar = Snackbar.make(Objects.requireNonNull(getView()),"Informe um produto",Snackbar.LENGTH_INDEFINITE);
                         snackbar.show();
                         snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimary));
                         snackbar.setActionTextColor(getResources().getColor(android.R.color.white));
@@ -259,7 +259,7 @@ public class Pedir extends Fragment {
 
     public void spinner() {
 
-        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getActivity(),
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
                 R.array.sp_produtos, android.R.layout.simple_spinner_dropdown_item);
 
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

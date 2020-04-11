@@ -1,8 +1,10 @@
 package br.com.marzinhogas.Helpers;
 
 import android.app.Activity;
+import android.widget.EditText;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QuerySnapshot;
 import br.com.marzinhogas.Models.Notification;
 import br.com.marzinhogas.Models.Pedido;
@@ -33,5 +35,9 @@ public interface IAccessFirebase {
     void BuscaUser(Pedido pedido,String id);
 
     boolean isOnline(Activity activity);
+
+    void lerdadosusuario(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, String id_user);
+
+    void alterardadosuser(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, FirebaseAuth id_user, Activity activity);
 
 }
