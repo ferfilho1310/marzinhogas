@@ -26,7 +26,7 @@
         android:layout_marginEnd="18dp"
         android:background="@drawable/shadow"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -57,23 +57,22 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/inputnumero">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_bairro_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="160dp"
                     android:drawableLeft="@drawable/ic_home"
                     android:drawablePadding="12dp"
-                    android:hint="Bairro" />
+                    android:hint="Bairro"
+                    android:minWidth="185dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,13 +85,13 @@
                     android:id="@+id/ed_numero_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="160dp"
                     android:drawableLeft="@drawable/ic_home"
                     android:drawablePadding="12dp"
-                    android:hint="Número" />
+                    android:hint="Número"
+                    android:minWidth="160dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_alterar_dados"
@@ -102,7 +101,7 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/corner_color"
             android:text="Alterar dados"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 

@@ -1,5 +1,7 @@
 package br.com.marzinhogas.Fragments.fragments_usuario.Perfil;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +30,7 @@ import br.com.marzinhogas.R;
 
 public class AlterarDadosPerfil extends Fragment {
 
-    EditText nome_update, endereco_update,bairro_update,numero_update;
+    EditText nome_update, endereco_update, bairro_update, numero_update;
     Button alterar_dados;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -84,27 +86,37 @@ public class AlterarDadosPerfil extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String uid = auth.getUid();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Atenção")
+                        .setMessage("Deseja realmente fazer a alteração do dados ?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                Map<String, Object> map = new HashMap<>();
+                                String uid = auth.getUid();
 
-                map.put("nome", nome_update.getText().toString());
-                map.put("endereco", endereco_update.getText().toString());
-                map.put("bairro",bairro_update.getText().toString());
-                map.put("numero",numero_update.getText().toString());
+                                Map<String, Object> map = new HashMap<>();
 
-                if (uid != null) {
+                                map.put("nome", nome_update.getText().toString());
+                                map.put("endereco", endereco_update.getText().toString());
+                                map.put("bairro", bairro_update.getText().toString());
+                                map.put("numero", numero_update.getText().toString());
 
-                    FirebaseFirestore.getInstance().collection("Users")
-                            .document(uid)
-                            .update(map);
-                }
+                                if (uid != null) {
 
-                Intent i_altera_perfil = new Intent(getActivity(), MainActivity.class);
-                startActivity(i_altera_perfil);
-                getActivity().finish();
+                                    FirebaseFirestore.getInstance().collection("Users")
+                                            .document(uid)
+                                            .update(map);
+                                }
 
-                Toast.makeText(getActivity(), "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
+                                Intent i_altera_perfil = new Intent(getActivity(), MainActivity.class);
+                                startActivity(i_altera_perfil);
+                                getActivity().finish();
+
+                                Toast.makeText(getActivity(), "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
+
+                            }
+                        }).setNegativeButton("Cancelar", null).show();
             }
         });
 
