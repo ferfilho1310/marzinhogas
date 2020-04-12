@@ -27,7 +27,14 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
 
         finalizar = findViewById(R.id.btn_finalizar);
 
-        ads();
+        Handler hd_splash_ads = new Handler();
+
+        hd_splash_ads.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ads();
+            }
+        },1000);
 
         Handler hd_splahs = new Handler();
         hd_splahs.postDelayed(new Runnable() {
@@ -45,20 +52,19 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
                 Intent i_splash = new Intent(SplashPedidoFinalizado.this, MainActivity.class);
                 startActivity(i_splash);
                 finish();
-
             }
         });
     }
 
     private void ads() {
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this, "ca-app-pub-2528240545678093~9230634671");
         AdRequest adIRequest = new AdRequest.Builder().build();
 
         // Prepare the Interstitial Ad Activity
         interstitial = new InterstitialAd(SplashPedidoFinalizado.this);
 
         // Insert the Ad Unit ID
-        interstitial.setAdUnitId("ca-app-pub-3940256099942544/5224354917");
+        interstitial.setAdUnitId("ca-app-pub-2528240545678093/8500264091");
 
         // Interstitial Ad load Request
         interstitial.loadAd(adIRequest);

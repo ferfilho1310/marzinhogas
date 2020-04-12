@@ -24,7 +24,7 @@ public class SplashScreenEntrar extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent i_splash = new Intent(SplashScreenEntrar.this, MainActivity.class);
+                Intent i_splash = new Intent(SplashScreenEntrar.this, EntrarUser.class);
                 startActivity(i_splash);
                 finish();
 
