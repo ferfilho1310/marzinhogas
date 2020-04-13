@@ -59,8 +59,8 @@ public class EntrarUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                /*Intent i_esquece_senha = new Intent(Entrar.this, EsqueceuSenha.class);
-                startActivity(i_esquece_senha);*/
+                Intent i_esquece_senha = new Intent(EntrarUser.this, RecuperarSenha.class);
+                startActivity(i_esquece_senha);
             }
         });
     }

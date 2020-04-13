@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controlers.SplashScreenEntrar"
+        <activity android:name=".Controlers.RecuperarSenha"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Controlers.SplashScreenEntrar"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,9 +28,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Controlers.EntrarUser"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Controlers.MainActivity"
             android:label="@string/app_name"
@@ -39,5 +39,4 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
     </application>
-
 </manifest>

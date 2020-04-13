@@ -416,7 +416,10 @@ public class AccessFirebase implements IAccessFirebase {
     public boolean isOnline(Activity activity) {
 
         ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        NetworkInfo netInfo = null;
+        if (cm != null) {
+            netInfo = cm.getActiveNetworkInfo();
+        }
         if (netInfo != null && netInfo.isConnected()) {
             return true;
         } else {
