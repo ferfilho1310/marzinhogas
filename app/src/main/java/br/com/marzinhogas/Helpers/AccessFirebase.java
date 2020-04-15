@@ -260,6 +260,7 @@ public class AccessFirebase implements IAccessFirebase {
                         map.put("nome", usuario.getNome());
                         map.put("endereco", usuario.getEndereco());
                         map.put("email", usuario.getEmail());
+                        map.put("complemento",usuario.getComplemento());
                         map.put("senha", AccessResources.getInstance().criptografiadesenha(usuario.getNome(), usuario.getSenha()));
                         map.put("bairro", usuario.getBairro());
                         map.put("numero", usuario.getNumero());

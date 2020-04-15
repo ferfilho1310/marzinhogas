@@ -47,13 +47,13 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="18dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:background="@drawable/shadow"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
@@ -98,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
@@ -137,13 +138,30 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_complemento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Complemento"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
+                tools:layout_editor_absoluteX="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_complemento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_home"
+                    android:drawablePadding="12dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+                tools:layout_editor_absoluteY="181dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_email"
@@ -235,7 +253,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/rg_sexos"
                 app:layout_constraintVertical_bias="0.0" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 
 </RelativeLayout>

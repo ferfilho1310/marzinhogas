@@ -11,12 +11,13 @@ public class Usuario {
     private String confirmarsenha;
     private String sexo;
     private String token;
+    private String complemento;
 
     public Usuario() {
     }
 
     public Usuario(String nome, String endereco, String email, String senha,
-                   String confirmarsenha, String sexo, String token) {
+                   String confirmarsenha, String sexo, String token, String complemento) {
         this.nome = nome;
         this.endereco = endereco;
         this.email = email;
@@ -26,6 +27,7 @@ public class Usuario {
         this.token = token;
         this.numero = numero;
         this.bairro = bairro;
+        this.complemento = complemento;
     }
 
     public String getNome() {
@@ -98,5 +100,13 @@ public class Usuario {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 }
