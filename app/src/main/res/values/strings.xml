@@ -35,7 +35,7 @@
     <string name="pedir">Pedir</string>
     <string name="sair">Sair</string>
     <string name="configura_es">Configurações</string>
-    <string name="alterar_dados">Alterar de dados</string>
+    <string name="alterar_dados">Altere seus dados</string>
     <string name="msg_pedido_user">Todos os pedidos realizados serão registrados aqui.   Faça seu primeiro pedido ;)</string>
 
     <string-array name="sp_produtos">

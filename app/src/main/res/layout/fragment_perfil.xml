@@ -87,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_home"
                     android:drawablePadding="12dp"
+                    android:inputType="number"
                     android:hint="Número"
                     android:minWidth="160dp" />
 

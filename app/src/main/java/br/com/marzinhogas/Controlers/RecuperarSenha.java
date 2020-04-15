@@ -55,7 +55,6 @@ public class RecuperarSenha extends AppCompatActivity {
             default:
                 break;
         }
-
         return true;
     }
 }
