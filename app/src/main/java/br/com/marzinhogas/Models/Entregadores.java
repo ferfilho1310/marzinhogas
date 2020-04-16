@@ -12,8 +12,8 @@ public class Entregadores extends Usuario implements Parcelable {
     }
 
     public Entregadores(String nome, String endereco, String email,
-                        String senha, String confirmarsenha, String sexo, String token) {
-        super(nome, endereco, email, senha, confirmarsenha, sexo, token);
+                        String senha, String confirmarsenha, String sexo, String token, String complemento) {
+        super(nome, endereco, email, senha, confirmarsenha, sexo, token,complemento);
 
     }
 

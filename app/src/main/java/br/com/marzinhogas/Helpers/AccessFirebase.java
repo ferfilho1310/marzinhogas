@@ -76,6 +76,7 @@ public class AccessFirebase implements IAccessFirebase {
         map.put("id_user", pedido.getUser_id_pedido());
         map.put("nome", pedido.getNome());
         map.put("endereco", pedido.getEndereco());
+        map.put("complemento", pedido.getComplemento());
         map.put("bairro", pedido.getBairro());
         map.put("numero", pedido.getNumero());
         map.put("data", pedido.getData());
@@ -96,6 +97,7 @@ public class AccessFirebase implements IAccessFirebase {
         map.put("id_user", pedido.getUser_id_pedido());
         map.put("nome", pedido.getNome());
         map.put("endereco", pedido.getEndereco());
+        map.put("complemento", pedido.getComplemento());
         map.put("bairro", pedido.getBairro());
         map.put("numero", pedido.getNumero());
         map.put("data", pedido.getData());
@@ -116,6 +118,7 @@ public class AccessFirebase implements IAccessFirebase {
         map.put("id_user", pedido.getUser_id_pedido());
         map.put("nome", pedido.getNome());
         map.put("endereco", pedido.getEndereco());
+        map.put("complemento", pedido.getComplemento());
         map.put("bairro", pedido.getBairro());
         map.put("numero", pedido.getNumero());
         map.put("data", pedido.getData());
@@ -141,6 +144,7 @@ public class AccessFirebase implements IAccessFirebase {
                         String recuperar_nome = "";
                         String recuperar_bairro = "";
                         String recuperar_numero = "";
+                        String recuperar_complemento = "";
 
                         if (task.isSuccessful()) {
                             QuerySnapshot queryDocumentSnapshots = task.getResult();
@@ -151,6 +155,7 @@ public class AccessFirebase implements IAccessFirebase {
                                 recuperar_nome = usuario_banco.getNome();
                                 recuperar_bairro = usuario_banco.getBairro();
                                 recuperar_numero = usuario_banco.getNumero();
+                                recuperar_complemento = usuario_banco.getComplemento();
 
                             }
 
@@ -158,6 +163,7 @@ public class AccessFirebase implements IAccessFirebase {
                             pedido.setNome(recuperar_nome);
                             pedido.setBairro(recuperar_bairro);
                             pedido.setNumero(recuperar_numero);
+                            pedido.setComplemento(recuperar_complemento);
                         }
                     }
                 });
@@ -201,7 +207,7 @@ public class AccessFirebase implements IAccessFirebase {
                             notification.setBody_pedido("Acesse o app para verificar.");
                             notification.setId_cliente(entregadores.getId_user());
 
-                            AccessFirebase.getInstance().notificacoes(entregadores.getToken(), notification);
+                            notificacoes(entregadores.getToken(), notification);
                         }
                     }
                 });
@@ -260,7 +266,7 @@ public class AccessFirebase implements IAccessFirebase {
                         map.put("nome", usuario.getNome());
                         map.put("endereco", usuario.getEndereco());
                         map.put("email", usuario.getEmail());
-                        map.put("complemento",usuario.getComplemento());
+                        map.put("complemento", usuario.getComplemento());
                         map.put("senha", AccessResources.getInstance().criptografiadesenha(usuario.getNome(), usuario.getSenha()));
                         map.put("bairro", usuario.getBairro());
                         map.put("numero", usuario.getNumero());
@@ -429,7 +435,8 @@ public class AccessFirebase implements IAccessFirebase {
     }
 
     @Override
-    public void lerdadosusuario(final EditText ed_nome, final EditText ed_endereco, final EditText ed_numero, final EditText ed_bairro, String id_user_logado) {
+    public void lerdadosusuario(final EditText ed_nome, final EditText ed_endereco, final EditText ed_numero,
+                                final EditText ed_bairro, final EditText complemento, String id_user_logado) {
 
         FirebaseFirestore.getInstance().collection("Users").whereEqualTo("id_user", id_user_logado)
                 .get()
@@ -441,6 +448,7 @@ public class AccessFirebase implements IAccessFirebase {
                         String recuperar_nome = "";
                         String recuperar_numero = "";
                         String recuperar_bairro = "";
+                        String recuperar_complemento = "";
 
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
 
@@ -450,18 +458,20 @@ public class AccessFirebase implements IAccessFirebase {
                             recuperar_nome = usuario_banco.getNome();
                             recuperar_bairro = usuario_banco.getBairro();
                             recuperar_numero = usuario_banco.getNumero();
+                            recuperar_complemento = usuario_banco.getComplemento();
                         }
 
                         ed_nome.setText(recuperar_nome);
                         ed_endereco.setText(recuperar_endereco);
                         ed_bairro.setText(recuperar_bairro);
                         ed_numero.setText(recuperar_numero);
+                        complemento.setText(recuperar_complemento);
                     }
                 });
     }
 
     @Override
-    public void alterardadosuser(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, FirebaseAuth auth, Activity context) {
+    public void alterardadosuser(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, EditText complemento, FirebaseAuth auth, Activity context) {
 
         String uid = auth.getUid();
 
@@ -471,9 +481,9 @@ public class AccessFirebase implements IAccessFirebase {
         map.put("endereco", ed_endereco.getText().toString());
         map.put("bairro", ed_bairro.getText().toString());
         map.put("numero", ed_numero.getText().toString());
+        map.put("complemento", complemento.getText().toString());
 
         if (uid != null) {
-
             FirebaseFirestore.getInstance().collection("Users")
                     .document(uid)
                     .update(map);

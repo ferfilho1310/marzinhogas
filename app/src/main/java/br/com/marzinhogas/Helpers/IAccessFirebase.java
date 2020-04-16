@@ -36,8 +36,8 @@ public interface IAccessFirebase {
 
     boolean isOnline(Activity activity);
 
-    void lerdadosusuario(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, String id_user);
+    void lerdadosusuario(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, EditText complemento,String id_user);
 
-    void alterardadosuser(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, FirebaseAuth id_user, Activity activity);
+    void alterardadosuser(EditText ed_nome, EditText ed_endereco, EditText ed_numero, EditText ed_bairro, EditText complemento, FirebaseAuth id_user, Activity activity);
 
 }

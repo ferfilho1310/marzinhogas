@@ -62,9 +62,7 @@ public class Pedidos extends Fragment {
     public void lerpedidosfeitos() {
 
         if (firebaseUser != null) {
-
             id_user = firebaseUser.getUid();
-
         }
 
         query = cl_pedidos.whereEqualTo("id_user", id_user)

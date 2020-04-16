@@ -87,12 +87,26 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_home"
                     android:drawablePadding="12dp"
-                    android:inputType="number"
                     android:hint="Número"
+                    android:inputType="number"
                     android:minWidth="160dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Complemento">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_complemento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_home"
+                android:drawablePadding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_alterar_dados"

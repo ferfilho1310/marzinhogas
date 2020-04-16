@@ -105,7 +105,7 @@ public class Pedir extends Fragment {
 
                     dialog.setContentView(R.layout.dialog_confirma_pedido);
 
-                    String endereco = pedido.getEndereco() + ", " + pedido.getBairro() + ", " + pedido.getNumero();
+                    String endereco = pedido.getEndereco() + ", " + pedido.getBairro() + ", " + pedido.getNumero() + ", " + pedido.getComplemento();
 
                     TextView confirma_nome = dialog.findViewById(R.id.conf_nome);
                     TextView confirma_endereco = dialog.findViewById(R.id.conf_endereco);
@@ -120,9 +120,9 @@ public class Pedir extends Fragment {
                     Button ok = dialog.findViewById(R.id.btn_OK);
                     Button cancelar = dialog.findViewById(R.id.btn_cancelar);
 
-                    if(pedido.getQuantidade_gas() == 0 && pedido.getQuantidade_agua() == 0){
+                    if (pedido.getQuantidade_gas() == 0 && pedido.getQuantidade_agua() == 0) {
 
-                        final Snackbar snackbar = Snackbar.make(Objects.requireNonNull(getView()),"Informe um produto",Snackbar.LENGTH_INDEFINITE);
+                        final Snackbar snackbar = Snackbar.make(Objects.requireNonNull(getView()), "Informe um produto", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimary));
                         snackbar.setActionTextColor(getResources().getColor(android.R.color.white));
@@ -144,7 +144,7 @@ public class Pedir extends Fragment {
 
                             Intent i_splash = new Intent(getActivity(), SplashPedidoFinalizado.class);
                             startActivity(i_splash);
-                            i_splash.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i_splash.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             getActivity().finish();
 
                             dialog.dismiss();
