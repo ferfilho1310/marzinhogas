@@ -69,14 +69,11 @@ public class CadastrarUser extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
                 if (fem.isChecked()) {
-
                     feminino = "Feminino";
                     usuario.setSexo(feminino);
-
                 }
 
                 if (masc.isChecked()) {
-
                     masculino = "Masculino";
                     usuario.setSexo(masculino);
                 }
@@ -122,6 +119,14 @@ public class CadastrarUser extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i_back = new Intent(CadastrarUser.this, EntrarUser.class);
+        startActivity(i_back);
+        finish();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
@@ -133,7 +138,6 @@ public class CadastrarUser extends AppCompatActivity {
             default:
                 break;
         }
-
         return true;
     }
 

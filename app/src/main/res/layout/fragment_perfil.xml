@@ -88,7 +88,7 @@
                     android:drawableLeft="@drawable/ic_home"
                     android:drawablePadding="12dp"
                     android:hint="Número"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:minWidth="160dp" />
 
             </com.google.android.material.textfield.TextInputLayout>

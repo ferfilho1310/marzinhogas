@@ -31,7 +31,7 @@ import br.com.marzinhogas.R;
 
 public class AlterarDadosPerfil extends Fragment {
 
-    private EditText nome_update, endereco_update, bairro_update, numero_update,complemento;
+    private EditText nome_update, endereco_update, bairro_update, numero_update, complemento;
     private Button alterar_dados;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -56,7 +56,7 @@ public class AlterarDadosPerfil extends Fragment {
             id_user_logado = firebaseUser.getUid();
         }
 
-        AccessFirebase.getInstance().lerdadosusuario(nome_update, endereco_update, numero_update, bairro_update,complemento, id_user_logado);
+        AccessFirebase.getInstance().lerdadosusuario(nome_update, endereco_update, numero_update, bairro_update, complemento, id_user_logado);
 
         alterar_dados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +70,7 @@ public class AlterarDadosPerfil extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 AccessFirebase.getInstance().alterardadosuser(nome_update, endereco_update, numero_update,
-                                        bairro_update,complemento, auth, getActivity());
+                                        bairro_update, complemento, auth, getActivity());
 
                             }
                         }).setNegativeButton("Cancelar", null).show();

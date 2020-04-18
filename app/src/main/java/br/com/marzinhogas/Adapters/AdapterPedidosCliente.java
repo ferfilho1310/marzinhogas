@@ -39,7 +39,7 @@ public class AdapterPedidosCliente extends FirestoreRecyclerAdapter<Pedido, Adap
     @Override
     protected void onBindViewHolder(@NonNull PedidosClienteHolder holder, int position, @NonNull Pedido model) {
 
-        String endereco = model.getEndereco() + ", " + model.getBairro() + ", " + model.getNumero() + ",\n" + model.getComplemento();
+        String endereco = model.getEndereco() + ", " + model.getNumero() + ", \n" + model.getBairro() + ",\n" + model.getComplemento();
 
         holder.nome.setText(model.getNome());
         holder.produtos.setText(model.getProduto());

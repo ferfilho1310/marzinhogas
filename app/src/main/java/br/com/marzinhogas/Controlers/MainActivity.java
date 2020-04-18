@@ -2,6 +2,7 @@ package br.com.marzinhogas.Controlers;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         FirebaseApp.initializeApp(MainActivity.this);
-
     }
 
     @Override
@@ -149,6 +149,13 @@ public class MainActivity extends AppCompatActivity {
             dialog_tabela.show();
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
     }
 
     @Override

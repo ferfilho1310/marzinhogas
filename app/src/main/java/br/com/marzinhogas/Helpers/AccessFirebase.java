@@ -238,6 +238,11 @@ public class AccessFirebase implements IAccessFirebase {
             return;
         }
 
+        if (TextUtils.isEmpty(usuario.getComplemento())) {
+            Toast.makeText(activity, "Informe a referência para entrega", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (TextUtils.isEmpty(usuario.getSenha())) {
             Toast.makeText(activity, "Informe uma senha.", Toast.LENGTH_LONG).show();
             return;
@@ -274,9 +279,9 @@ public class AccessFirebase implements IAccessFirebase {
                         map.put("sexo", usuario.getSexo());
                         map.put("token", usuario.getToken());
 
-                        Intent intent = new Intent(activity, MainActivity.class);
+                        Intent intent = new Intent(activity, EntrarUser.class);
                         activity.startActivity(intent);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         activity.finish();
 
                         db_users.document(firebaseAuth.getUid()).set(map);
@@ -368,8 +373,8 @@ public class AccessFirebase implements IAccessFirebase {
 
                         Intent i_entrar_prof = new Intent(activity, MainActivity.class);
                         activity.startActivity(i_entrar_prof);
-                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.finish();
+                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                         Toast.makeText(activity, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
                     } else {

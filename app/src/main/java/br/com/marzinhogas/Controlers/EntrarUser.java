@@ -38,27 +38,22 @@ public class EntrarUser extends AppCompatActivity {
         entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 AccessFirebase.getInstance().entrar_firebase(email.getText().toString(), senha.getText().toString(), EntrarUser.this);
-
             }
         });
 
         cadastre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i_cadastrar = new Intent(EntrarUser.this, CadastrarUser.class);
-                startActivity(i_cadastrar);
                 i_cadastrar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
+                startActivity(i_cadastrar);
             }
         });
 
         esqueceu_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i_esquece_senha = new Intent(EntrarUser.this, RecuperarSenha.class);
                 startActivity(i_esquece_senha);
             }

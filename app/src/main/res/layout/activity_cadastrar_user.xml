@@ -131,7 +131,7 @@
                         android:drawableStart="@drawable/ic_home"
                         android:drawablePadding="12dp"
                         android:hint="Número"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:minWidth="175dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -141,7 +141,7 @@
                 android:id="@+id/text_input_complemento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Complemento"
+                android:hint="Referência para entrega (Opcional)"
                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
                 tools:layout_editor_absoluteX="12dp">
 
