@@ -27,14 +27,7 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
 
         finalizar = findViewById(R.id.btn_finalizar);
 
-        Handler hd_splash_ads = new Handler();
-
-        hd_splash_ads.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ads();
-            }
-        },1000);
+        ads();
 
         Handler hd_splahs = new Handler();
         hd_splahs.postDelayed(new Runnable() {
@@ -43,7 +36,7 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
                 finalizar.setVisibility(View.VISIBLE);
 
             }
-        }, 5000);
+        }, 3000);
 
         finalizar.setOnClickListener(new View.OnClickListener() {
             @Override

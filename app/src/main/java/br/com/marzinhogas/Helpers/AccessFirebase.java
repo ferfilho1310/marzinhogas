@@ -373,15 +373,14 @@ public class AccessFirebase implements IAccessFirebase {
 
                         Intent i_entrar_prof = new Intent(activity, MainActivity.class);
                         activity.startActivity(i_entrar_prof);
+                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         activity.finish();
-                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                         Toast.makeText(activity, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(activity, "Erro ao efetuar o login. Verifique os dados digitados", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
-
                     Toast.makeText(activity, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_LONG).show();
                 }
                 progressDialog.dismiss();
@@ -393,7 +392,6 @@ public class AccessFirebase implements IAccessFirebase {
     public void reset_senha(final String email, final Activity context) {
 
         if (TextUtils.isEmpty(email)) {
-
             Toast.makeText(context, "Informe um e-mail.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -412,13 +410,10 @@ public class AccessFirebase implements IAccessFirebase {
                         Toast.makeText(context, "Enviado e-mail para reset de senha para " + email, Toast.LENGTH_LONG).show();
 
                     } else {
-
                         Toast.makeText(context, "E-mail inválido", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
-
                     Toast.makeText(context, "Erro ao enviar e-mail de recuperação:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -499,6 +494,5 @@ public class AccessFirebase implements IAccessFirebase {
         context.finish();
 
         Toast.makeText(context, "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
-
     }
 }

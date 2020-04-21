@@ -70,7 +70,7 @@ public class Pedir extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_pedir, container, false);
 
-        FirebaseApp.initializeApp(Objects.requireNonNull(getActivity()));
+        FirebaseApp.initializeApp(getActivity());
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
@@ -99,13 +99,13 @@ public class Pedir extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (AccessFirebase.getInstance().isOnline(Objects.requireNonNull(getActivity()))) {
+                if (AccessFirebase.getInstance().isOnline(getActivity())) {
 
-                    final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
+                    final Dialog dialog = new Dialog(getActivity());
 
                     dialog.setContentView(R.layout.dialog_confirma_pedido);
 
-                    String endereco = pedido.getEndereco() + ", " + pedido.getBairro() + ", " + pedido.getNumero() + ", " + pedido.getComplemento();
+                    String endereco = pedido.getEndereco() + ", " + pedido.getNumero() + ", " + pedido.getBairro() + ", " + pedido.getComplemento();
 
                     TextView confirma_nome = dialog.findViewById(R.id.conf_nome);
                     TextView confirma_endereco = dialog.findViewById(R.id.conf_endereco);
@@ -122,7 +122,7 @@ public class Pedir extends Fragment {
 
                     if (pedido.getQuantidade_gas() == 0 && pedido.getQuantidade_agua() == 0) {
 
-                        final Snackbar snackbar = Snackbar.make(Objects.requireNonNull(getView()), "Informe um produto", Snackbar.LENGTH_LONG);
+                        final Snackbar snackbar = Snackbar.make(getView(), "Informe um produto", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         snackbar.setBackgroundTint(getResources().getColor(R.color.colorPrimary));
                         snackbar.setActionTextColor(getResources().getColor(android.R.color.white));
@@ -162,7 +162,7 @@ public class Pedir extends Fragment {
                     dialog.show();
 
                 } else {
-                    final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
+                    final Dialog dialog = new Dialog(getActivity());
 
                     dialog.setContentView(R.layout.sem_internet);
 
@@ -259,7 +259,7 @@ public class Pedir extends Fragment {
 
     public void spinner() {
 
-        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()),
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.sp_produtos, android.R.layout.simple_spinner_dropdown_item);
 
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
