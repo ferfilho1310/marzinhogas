@@ -19,9 +19,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sem Internet"
+            android:text="@string/sem_internet"
             android:textColor="@android:color/white"
-            android:textSize="25dp"/>
+            android:textSize="25sp"/>
 
     </LinearLayout>
 
@@ -36,8 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Verifique sua conexão com a internet"
-            android:textSize="25dp" />
+            android:text="@string/verifique_sua_conex_o_com_a_internet"
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/btn_close_internet_dialog"
@@ -50,10 +50,8 @@
             android:layout_marginStart="12dp"
             android:padding="15dp"
             android:background="@drawable/corner_color"
-            android:text="Fechar"
+            android:text="@string/fechar"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
-
-
 </LinearLayout>

@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_home"
                 android:drawablePadding="12dp"
-                android:hint="Endereço" />
+                android:hint="@string/endere_o" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,9 +69,9 @@
                     android:id="@+id/ed_bairro_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_home"
+                    android:drawableStart="@drawable/ic_home"
                     android:drawablePadding="12dp"
-                    android:hint="Bairro"
+                    android:hint="@string/bairro"
                     android:minWidth="185dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -85,9 +85,9 @@
                     android:id="@+id/ed_numero_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_home"
+                    android:drawableStart="@drawable/ic_home"
                     android:drawablePadding="12dp"
-                    android:hint="Número"
+                    android:hint="@string/n_mero"
                     android:inputType="text"
                     android:minWidth="160dp" />
 
@@ -97,15 +97,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Complemento">
+            android:hint="@string/refer_ncia_para_entrega">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ed_complemento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_home"
+                android:drawableStart="@drawable/ic_home"
                 android:drawablePadding="12dp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -115,9 +114,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:background="@drawable/corner_color"
-            android:text="Alterar dados"
+            android:text="@string/alterar_dados_perfil"
             android:textColor="@android:color/white" />
-
     </LinearLayout>
-
 </LinearLayout>

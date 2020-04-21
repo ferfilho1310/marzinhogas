@@ -24,7 +24,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:gravity="center"
-        android:text="Pedido realizado.\nObrigado pela preferência!"
+        android:text="@string/pedido_realizado_nobrigado_pela_prefer_ncia"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold" />

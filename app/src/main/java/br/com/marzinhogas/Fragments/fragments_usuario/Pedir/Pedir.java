@@ -111,6 +111,8 @@ public class Pedir extends Fragment {
                     TextView confirma_endereco = dialog.findViewById(R.id.conf_endereco);
                     TextView confirma_qtd_agua = dialog.findViewById(R.id.conf_qtd_agua);
                     TextView confirma_qts_gas = dialog.findViewById(R.id.conf_qtd_gas);
+                    LinearLayout lay_qtd_agua = dialog.findViewById(R.id.lay_qtd_agua);
+                    LinearLayout lay_qtd_gas = dialog.findViewById(R.id.lay_qtd_gas);
 
                     confirma_nome.setText(pedido.getNome());
                     confirma_endereco.setText(endereco);
@@ -119,6 +121,14 @@ public class Pedir extends Fragment {
 
                     Button ok = dialog.findViewById(R.id.btn_OK);
                     Button cancelar = dialog.findViewById(R.id.btn_cancelar);
+
+                    if (pedido.getQuantidade_gas() == 0) {
+                        lay_qtd_gas.setVisibility(View.GONE);
+                    }
+
+                    if (pedido.getQuantidade_agua() == 0) {
+                        lay_qtd_agua.setVisibility(View.GONE);
+                    }
 
                     if (pedido.getQuantidade_gas() == 0 && pedido.getQuantidade_agua() == 0) {
 
@@ -148,7 +158,6 @@ public class Pedir extends Fragment {
                             getActivity().finish();
 
                             dialog.dismiss();
-
                         }
                     });
 
@@ -160,12 +169,10 @@ public class Pedir extends Fragment {
                         }
                     });
                     dialog.show();
-
                 } else {
+
                     final Dialog dialog = new Dialog(getActivity());
-
                     dialog.setContentView(R.layout.sem_internet);
-
                     Button fab_fechar_internet_dialog = dialog.findViewById(R.id.btn_close_internet_dialog);
 
                     fab_fechar_internet_dialog.setOnClickListener(new View.OnClickListener() {
@@ -175,7 +182,6 @@ public class Pedir extends Fragment {
                             dialog.dismiss();
                         }
                     });
-
                     dialog.show();
                 }
             }
@@ -230,7 +236,6 @@ public class Pedir extends Fragment {
                     FirebaseFirestore.getInstance().collection("Users")
                             .document(uid)
                             .update("token", token);
-
                 }
             }
         });
@@ -243,7 +248,6 @@ public class Pedir extends Fragment {
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
                 pedido.setQuantidade_agua(numberPicker.getValue());
-
             }
         });
 
@@ -252,7 +256,6 @@ public class Pedir extends Fragment {
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
                 pedido.setQuantidade_gas(numberPicker.getValue());
-
             }
         });
     }

@@ -4,8 +4,8 @@
 
     <item android:id="@+id/tabela_preco"
         android:orderInCategory="1"
-        app:showAsAction="always"
-        android:title="Tabela de preço"/>
+        app:showAsAction="ifRoom"
+        android:title="@string/tabela_de_precos"/>
 
     <item
         android:id="@+id/sair"
@@ -13,6 +13,4 @@
         android:icon="@drawable/ic_exit"
         app:showAsAction="always"
         android:title="@string/sair"/>
-
-
 </menu>

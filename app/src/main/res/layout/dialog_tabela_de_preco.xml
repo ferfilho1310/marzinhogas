@@ -16,18 +16,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/colorPrimary"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_assignment"
+                android:layout_gravity="center"
+                android:padding="8dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="25dp"
-                android:text="Tabela de precos"
+                android:padding="8dp"
+                android:text="@string/tabela_de_precos"
                 android:textColor="@android:color/white"
                 android:textSize="22sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -47,7 +54,7 @@
                     android:id="@+id/agua_preço"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Água"
+                    android:text="@string/gua"
                     android:textSize="25sp" />
 
                 <TextView
@@ -56,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_toEndOf="@id/agua_preço"
-                    android:text="R$"
+                    android:text="@string/reais"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
@@ -82,7 +89,7 @@
                     android:id="@+id/gas_preço"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gás"
+                    android:text="@string/g_s"
                     android:textSize="25sp" />
 
                 <TextView
@@ -91,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_toEndOf="@id/gas_preço"
-                    android:text="R$"
+                    android:text="@string/reais"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
@@ -118,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/corner_color"
-                android:text="fechar"
+                android:text="@string/fechar"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

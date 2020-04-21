@@ -68,7 +68,7 @@
                     android:id="@+id/ed_nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_person"
+                    android:drawableStart="@drawable/ic_person"
                     android:drawablePadding="12dp"
                     android:inputType="text" />
 
@@ -78,7 +78,7 @@
                 android:id="@+id/textInputLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Endereço Completo"
+                android:hint="@string/endere_o_completo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
@@ -87,7 +87,7 @@
                     android:id="@+id/btn_endereço"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_home"
+                    android:drawableStart="@drawable/ic_home"
                     android:drawablePadding="12dp"
                     android:inputType="text" />
 
@@ -111,9 +111,9 @@
                         android:id="@+id/ed_bairro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_home"
+                        android:drawableStart="@drawable/ic_home"
                         android:drawablePadding="12dp"
-                        android:hint="Bairro"
+                        android:hint="@string/bairro"
                         android:inputType="text"
                         android:minWidth="170dp" />
 
@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_home"
                         android:drawablePadding="12dp"
-                        android:hint="Número"
+                        android:hint="@string/n_mero"
                         android:inputType="text"
                         android:minWidth="175dp" />
 
@@ -141,7 +141,7 @@
                 android:id="@+id/text_input_complemento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Referência para entrega"
+                android:hint="@string/refer_ncia_para_entrega"
                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
                 tools:layout_editor_absoluteX="12dp">
 
@@ -149,7 +149,7 @@
                     android:id="@+id/ed_complemento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_home"
+                    android:drawableStart="@drawable/ic_home"
                     android:drawablePadding="12dp"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -167,7 +167,7 @@
                     android:id="@+id/ed_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_email"
+                    android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="12dp"
                     android:inputType="textEmailAddress" />
 
