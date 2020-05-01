@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,8 +19,9 @@ import br.com.marzinhogas.R;
 
 public class SplashPedidoFinalizado extends AppCompatActivity {
 
-    FloatingActionButton finalizar;
+    ImageButton finalizar;
     InterstitialAd interstitial;
+    AdView ad_bloco_1,ad_bloco_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,17 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
         setContentView(R.layout.activity_splash_pedido_finalizado);
 
         finalizar = findViewById(R.id.btn_finalizar);
+        ad_bloco_1 = findViewById(R.id.ad_bloco_1);
+        ad_bloco_2 = findViewById(R.id.ad_bloco_2);
+
+        Handler h_ad_blocos = new Handler();
+
+        h_ad_blocos.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adsblocosbanner();
+            }
+        },500);
 
         Handler h_ads = new Handler();
         h_ads.postDelayed(new Runnable() {
@@ -41,7 +55,7 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
             public void run() {
                 finalizar.setVisibility(View.VISIBLE);
             }
-        }, 4000);
+        }, 6000);
 
         finalizar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,5 +94,14 @@ public class SplashPedidoFinalizado extends AppCompatActivity {
         if (interstitial.isLoaded()) {
             interstitial.show();
         }
+    }
+
+    private void adsblocosbanner(){
+        MobileAds.initialize(this, "ca-app-pub-2528240545678093~9230634671");
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        ad_bloco_1.loadAd(adRequest);
+        ad_bloco_2.loadAd(adRequest);
     }
 }
