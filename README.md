@@ -13,7 +13,6 @@ Acesse o link da play store para baixar: https://play.google.com/store/apps/deta
 - Firebase
 - Admob
 - Android Studio
-- MVC
 - Design Patterns
 
 <strong>Imagens da aplicação</strong>
